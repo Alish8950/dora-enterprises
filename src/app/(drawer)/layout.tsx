@@ -1,8 +1,9 @@
+import Header from "@/components/Header";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import theme from "@/assets/theme/theme";
-import "./globals.scss";
 import { ThemeProvider } from "@mui/material";
+import theme from "@/assets/theme/theme";
+import Footer from "@/components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,8 +18,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
+    <ThemeProvider theme={theme}>
       <html lang="en">
-        <body>{children}</body>
+        <body>
+          <Header />
+          {children}
+          <Footer />
+        </body>
       </html>
+    </ThemeProvider>
   );
 }
