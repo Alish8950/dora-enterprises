@@ -30,9 +30,17 @@ const config: Config = {
       "blue-[800]": "#0B254B",
       "blue-[900]": "#1D293F",
 
+      //Green Shades
+      "green-[100]": "#DDF0E6",
+      "green-[200]": "#849A8E",
+
       //Grey shades
+      "grey-[200]": "#A7A7A7",
+      "grey-[300]": "#E6E6E6",
+      "grey-[400]": "#858585",
       "grey-[500]": "#7C8087",
       "grey-[600]": "#5E6E89",
+      "grey-[700]": "#1D252C",
     },
     boxShadow: {
       "sm": "0px 4px 24px 0px rgba(139, 167, 178, 0.16)",

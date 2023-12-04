@@ -25,7 +25,7 @@ const Header = () => {
   };
   return (
     <>
-      <Box className="sticky top-0 bg-white z-10">
+      <Box className="sticky top-0 bg-white z-10 border-b border-green-[100]">
         <Box className="flex justify-between items-center max-w-[77%] m-auto h-[75px]">
           <Box>
             <Image src={EcomLogo} alt="logo" />
