@@ -10,11 +10,13 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
+import { useRouter } from 'next/navigation'
 
 const options = ["None", "Atria", "Callisto"];
 const ITEM_HEIGHT = 48;
 
 const Header = () => {
+  const router = useRouter()
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -27,7 +29,7 @@ const Header = () => {
     <>
       <Box className="sticky top-0 bg-white z-10 border-b border-green-[100]">
         <Box className="flex justify-between items-center max-w-[77%] m-auto h-[75px]">
-          <Box>
+          <Box className='cursor-pointer' onClick={() => router.push('/Home')}>
             <Image src={EcomLogo} alt="logo" />
           </Box>
           <Box className="flex items-center gap-4">
@@ -75,21 +77,21 @@ const Header = () => {
             <Link
               className="text-secondary text-base"
               underline="none"
-              href="#"
+              href="/About"
             >
               About
             </Link>
             <Link
               className="text-secondary text-base"
               underline="none"
-              href="#"
+              href="ContactUs"
             >
               Contact us
             </Link>
           </Box>
           <Box className="flex items-center flex-between gap-4">
             <Person4OutlinedIcon />
-            <ShoppingCartOutlinedIcon />
+            <ShoppingCartOutlinedIcon className="cursor-pointer" onClick={() => router.push('/Cart')}/>
           </Box>
         </Box>
       </Box>

@@ -25,6 +25,8 @@ const config: Config = {
       //White shades
       "white-[200]": "#F7F8FA",
       "white-[300]": "#E1E1E1",
+      "white-[400]": "#F2F2F2",
+      "white-[500]": "#E5E5E5",
 
       //Blue Shades
       "blue-[800]": "#0B254B",
@@ -35,12 +37,14 @@ const config: Config = {
       "green-[200]": "#849A8E",
 
       //Grey shades
+      "grey-[100]": "#9E9E9E",
       "grey-[200]": "#A7A7A7",
       "grey-[300]": "#E6E6E6",
       "grey-[400]": "#858585",
       "grey-[500]": "#7C8087",
       "grey-[600]": "#5E6E89",
       "grey-[700]": "#1D252C",
+      "grey-[800]": "#616161",
     },
     boxShadow: {
       "sm": "0px 4px 24px 0px rgba(139, 167, 178, 0.16)",
