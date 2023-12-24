@@ -23,7 +23,7 @@ const PopularProducts = () => {
                   alt="Sample Product"
                 />
               </Box>
-              <Box className="bg-white px-6 py-4">
+              <Box className="bg-white px-6 py-4 text-left">
                 <Typography className="text-base text-blue-[900] font-medium">
                   Spiced Mint
                 </Typography>
