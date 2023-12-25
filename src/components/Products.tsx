@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Box, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import SampleProduct from "../assets/images/sample_product.png";
@@ -10,6 +10,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import { useGlobalProducts } from "@/context/productList";
 
 interface MyData {
   id: string;
@@ -17,10 +18,14 @@ interface MyData {
   productPrice: number;
 }
 const API_URL = "http://localhost:3000/api/getAll";
-const baseURL = 'http://localhost:5000';
+const baseURL = "http://localhost:5000";
 
 const Products = () => {
+  // const customers = useContext(MyContext);
+  const { products } = useGlobalProducts();
+  console.log(products)
   const [customers, setCustomers] = useState<MyData[]>([]);
+  console.log(customers, "customers")
   const [editcustomers, setEditCustomers] = useState<MyData[]>([]);
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
@@ -40,6 +45,7 @@ const Products = () => {
 
   useEffect(() => {
     getData(API_URL);
+    // console.log(customers)
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -121,7 +127,7 @@ const Products = () => {
         </Typography>
       </Box>
       <Box className="grid grid-cols-4 gap-8">
-        {customers.map((cus) => {
+        {products.map((cus) => {
           return (
             <Box
               className="max-w-[255px] shadow-lg cursor-pointer"

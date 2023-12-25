@@ -8,8 +8,13 @@ import LearnMore from "@/components/LearnMore";
 import Testimonials from "@/components/Testimonials";
 import PopularProducts from "@/components/PopularProducts";
 import Footer from "@/components/Footer";
+import { useGlobalProducts } from "../../../context/productList";
 
 export default function Home() {
+  const {products}  = useGlobalProducts();
+  useEffect(() => {
+    console.log(products, "dfhkdajfh")
+  },[products])
   return (
     <>
       <Box>
@@ -40,10 +45,10 @@ export default function Home() {
           </Box>
         </Box>
       </Box>
-      <Products/>
-      <LearnMore/>
-      <Testimonials/>
-      <PopularProducts/>
+      <Products />
+      <LearnMore />
+      <Testimonials />
+      <PopularProducts />
     </>
   );
 }
