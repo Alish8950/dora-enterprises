@@ -1,8 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography } from "@mui/material";
 import Image from "next/image";
-import ProductImage from "../../../assets/images/product_image.jpg";
+import ProductImage from "../../../../assets/images/product_image.jpg";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -14,10 +14,27 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function Product() {
+interface SingleProduct {
+  productName: string,
+  productPrice: number,
+  alcoholDescription: string,
+  alcoholPercentage: number,
+  quantity: string
+}
+
+
+const baseURL = 'http://localhost:5000';
+
+export default function Product({
+  params,
+}: {
+  params: { ProductDetails: string };
+}) {
   const [quantity, setQuantity] = useState(0);
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
+  const [productDetails, setProductDetails] = useState<SingleProduct | null>(null);
 
   //Weeks duration select
   const handlesubsDuration = (event: SelectChangeEvent) => {
@@ -35,6 +52,26 @@ export default function Product() {
       setQuantity((prev) => prev - 1);
     }
   };
+
+  const getSingleCustomer = async () => {
+    try {
+      const res = await fetch(
+        `${baseURL}/products/${params.ProductDetails}`
+      );
+      const data = await res.json();
+      setProductDetails(data);
+      console.log(data);
+    } catch (error) {
+      console.log("Can't get data ", error);
+    }
+  };
+
+  useEffect(() => {
+    getSingleCustomer();
+  },[])
+  useEffect(() => {
+    console.log(productDetails, "dfgjhkbsaknd")
+  })
   return (
     <>
       <Box className="max-w-[1111px] m-auto flex gap-[30px] w-full pt-[47px] pb-[114px]">
@@ -55,16 +92,16 @@ export default function Product() {
         <Box className="w-full">
           <Box>
             <Typography className="text-secondary text-[26px] font-medium mb-4">
-              Spiced Mint Candleaf®
+              {productDetails?.productName}
             </Typography>
             <Box className="flex justify-between w-full">
               <Box>
                 <Typography className="text-primary font-medium text-[26px] mb-8">
-                  $9.99
+                  ${productDetails?.productPrice}
                 </Typography>
                 <Box>
                   <Typography className="mb-2">Quantity</Typography>
-                  <Box className="flex items-center border border-primary justify-between">
+                  <Box className="flex items-center border border-primary justify-between w-[65px]">
                     <RemoveIcon
                       className={`text-xl cursor-pointer ${
                         quantity ? "text-primary" : "text-grey-[200]"
@@ -109,9 +146,7 @@ export default function Product() {
                                 value={subscriptionDuration}
                                 displayEmpty
                                 onChange={handlesubsDuration}
-                                IconComponent={() => (
-                                  <KeyboardArrowDownIcon />
-                                )}
+                                IconComponent={() => <KeyboardArrowDownIcon />}
                               >
                                 <MenuItem value={2}>2 Weeks</MenuItem>
                                 <MenuItem value={4}>4 Weeks</MenuItem>
@@ -144,27 +179,18 @@ export default function Product() {
                 </Button>
               </Box>
             </Box>
-            <Box className="border border-grey-[300] mt-10 rounded-lg p-5">
+            <Box className="border border-grey-[300] mt-10 rounded-lg p-5 w-fit">
+              <Typography>Key Features</Typography>
               <Typography className="text-base text-green-[200]">
-                <span className="text-grey-[700]">Wax: </span>Top grade Soy wax
-                that delivers a smoke less, consistent burn
+                <span className="text-grey-[700]">Description: </span>{productDetails?.alcoholDescription}
               </Typography>
-              <Typography className="text-base text-green-[200]">
-                <span className="text-grey-[700]">Fragrance: </span>Premium
-                quality ingredients with natural essential oils
-              </Typography>
+                <Typography className="text-base text-green-[200]">
+                <span className="text-grey-[700]">Quantity: </span>{productDetails?.quantity}
+                </Typography>
+                <Typography className="text-base text-green-[200]">
+                  <span className="text-grey-[700]">Alcohol Percentage: </span>{productDetails?.alcoholPercentage}%
+                </Typography>
               <Box className="flex justify-between items-center max-w-[540px]">
-                <Typography className="text-base text-green-[200]">
-                  <span className="text-grey-[700]">Burning Time: </span>70-75
-                  hours
-                </Typography>
-                <Typography className="text-base text-green-[200]">
-                  <span className="text-grey-[700]">Dimensions: </span>10cm x
-                  5cm
-                </Typography>
-                <Typography className="text-base text-green-[200]">
-                  <span className="text-grey-[700]">Weight: </span>400g
-                </Typography>
               </Box>
             </Box>
           </Box>
