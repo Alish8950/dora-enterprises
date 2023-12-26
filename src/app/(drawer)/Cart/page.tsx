@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, Typography, Link } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -12,23 +12,44 @@ import ProductImage from "../../../assets/images/product_image.jpg";
 import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
+import { useGlobalCart } from "@/context/cartContext";
+
+
 
 export default function Cart() {
-  const [quantity, setQuantity] = useState(1);
-  const productPrice = 9.99;
-  const singleProductTotal = productPrice * quantity;
+  const { cart } = useGlobalCart();
+  console.log(cart, "cart");
+  const [quantity, setQuantity] = useState<number[]>([]);
+  const totalPrice = cart.reduce((total, currentItem, index) => {
+    return total + currentItem.productPrice * quantity[index];
+  }, 0);
 
-  //Products Quantity Functions
-  const increaseQuantity = () => {
-    setQuantity((prev) => prev + 1);
-  };
-  const decreaseQuantity = () => {
-    if (quantity === 1) {
-      return;
-    } else {
-      setQuantity((prev) => prev - 1);
+  useEffect(() => {
+    // Create an array of quantities from the cart items
+    const quantities = cart.map(item => item.quantity);
+
+    // Update the vals state
+    setQuantity(quantities);
+  }, [cart]);
+
+  // Function to increase quantity
+const increaseQuantity = (index: number) => {
+  setQuantity(quantity.map((qty, i) => {
+    if (i === index) {
+      return qty + 1;
     }
-  };
+    return qty;
+  }));
+};
+// Function to decrease quantity
+const decreaseQuantity = (index: number) => {
+  setQuantity(quantity.map((qty, i) => {
+    if (i === index && qty > 1) { // Prevents quantity from going below 1
+      return qty - 1;
+    }
+    return qty;
+  }));
+};
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
@@ -36,7 +57,7 @@ export default function Cart() {
           <Typography className="text-secondary text-[26px] font-medium">
             Your Cart Items
           </Typography>
-          <Link className="text-lg mt-4 block" href="#">
+          <Link className="text-lg mt-4 block" href="/Home">
             Back to shopping
           </Link>
         </Box>
@@ -52,50 +73,58 @@ export default function Cart() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <Box className="flex gap-7">
-                      <Box className="max-w-[160px]">
-                        <Image src={ProductImage} alt="product image" />
-                      </Box>
-                      <Box>
-                        <Typography className="text-[26px] text-secondary mb-5 font-medium">
-                          Spiced Mint Candleaf®
-                        </Typography>
-                        <Link className="text-lg" href="#">
-                          Remove
-                        </Link>
-                      </Box>
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left" className="text-lg font-medium">
-                    ${productPrice}
-                  </TableCell>
-                  <TableCell align="left">
-                    <Box className="flex items-center border border-primary justify-between w-[75px]">
-                      <RemoveIcon
-                        className={`text-xl cursor-pointer ${
-                          quantity !== 1 ? "text-primary" : "text-grey-[200]"
-                        }`}
-                        onClick={() => decreaseQuantity()}
-                      />
-                      <Typography>{quantity}</Typography>
-                      <AddIcon
-                        className="text-xl text-primary cursor-pointer"
-                        onClick={() => increaseQuantity()}
-                      />
-                    </Box>
-                  </TableCell>
-                  <TableCell align="left" className="text-lg font-medium">
-                    ${singleProductTotal}
-                  </TableCell>
-                </TableRow>
+                {cart.map((cart, index) => {
+                  return (
+                    <TableRow key={cart.id}>
+                      <TableCell component="th" scope="row">
+                        <Box className="flex gap-7">
+                          <Box className="max-w-[160px]">
+                            <Image src={ProductImage} alt="product image" />
+                          </Box>
+                          <Box>
+                            <Typography className="text-[26px] text-secondary mb-5 font-medium">
+                              {cart.productName}
+                            </Typography>
+                            <Link className="text-lg" href="#">
+                              Remove
+                            </Link>
+                          </Box>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="left" className="text-lg font-medium">
+                        ${cart.productPrice}
+                      </TableCell>
+                      <TableCell align="left">
+                        <Box className="flex items-center border border-primary justify-between w-[75px]">
+                          <RemoveIcon
+                            className={`text-xl cursor-pointer ${
+                              quantity[index] !== 1
+                                ? "text-primary"
+                                : "text-grey-[200]"
+                            }`}
+                            onClick={() => decreaseQuantity(index)}
+                            // onClick={() => updateQuantity(cart.id, false)}
+                            />
+                          <Typography>{quantity[index]}</Typography>
+                          <AddIcon 
+                            className="text-xl text-primary cursor-pointer"
+                            onClick={() => increaseQuantity(index)}
+                            // onClick={() => updateQuantity(cart.id, true)}
+                          />
+                        </Box>
+                      </TableCell>
+                      <TableCell align="left" className="text-lg font-medium">
+                      ${cart.productPrice * quantity[index] }
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
               </TableBody>
             </Table>
           </TableContainer>
           <Box className="text-right mt-7">
             <Typography className="text-xl text-secondary font-medium">
-              Sub-total: ${singleProductTotal}
+              Sub-total: ${totalPrice}
             </Typography>
             {/* <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4">
               Check-out

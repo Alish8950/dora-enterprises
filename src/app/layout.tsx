@@ -4,6 +4,8 @@ import theme from "@/assets/theme/theme";
 import "./globals.scss";
 import { ThemeProvider } from "@mui/material";
 import { AppProvider } from "@/context/productList";
+import { TestimonialsProvider } from "@/context/testimonialsContext";
+import { CartProvider } from "@/context/cartContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,7 +22,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AppProvider>{children}</AppProvider>
+        <AppProvider>
+          <CartProvider>
+            <TestimonialsProvider>{children}</TestimonialsProvider>
+          </CartProvider>
+        </AppProvider>
       </body>
     </html>
   );

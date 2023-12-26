@@ -2,8 +2,18 @@ import React from "react";
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
 import SampleProduct from "../assets/images/sample_product.png";
+import { useGlobalProducts } from "@/context/productList";
+import { useRouter } from "next/navigation";
 
 const PopularProducts = () => {
+  const router = useRouter();
+  const { products } = useGlobalProducts();
+
+  const sortedData = products.sort((a, b) => b.averageRating - a.averageRating);
+
+  const topItems = sortedData.slice(0, 4);
+
+
   return (
     <>
       <Box>
@@ -15,41 +25,29 @@ const PopularProducts = () => {
             Our top selling product that you may like
           </Typography>
           <Box className="grid grid-cols-4 gap-8">
-            <Box className="max-w-[255px] shadow-lg">
-              <Box className=" bg-white-[200] flex items-center justify-center">
-                <Image
-                  className="w-[200px]"
-                  src={SampleProduct}
-                  alt="Sample Product"
-                />
-              </Box>
-              <Box className="bg-white px-6 py-4 text-left">
-                <Typography className="text-base text-blue-[900] font-medium">
-                  Spiced Mint
-                </Typography>
-                <Typography className="font-xl text-right text-primary">
-                  9.99$
-                </Typography>
-              </Box>
-            </Box>
-            <Box className="max-w-[255px] shadow-lg">
-              <Box className=" bg-white-[200] flex items-center justify-center">
-                <Image
-                  className="w-[200px]"
-                  src={SampleProduct}
-                  alt="Sample Product"
-                />
-              </Box>
-              <Box className="bg-white px-6 py-4">
-                <Typography className="text-base text-blue-[900] font-medium">
-                  Spiced Mint
-                </Typography>
-                <Typography className="font-xl text-right text-primary">
-                  9.99$
-                </Typography>
-              </Box>
-            </Box>
-            <Box className="max-w-[255px] shadow-lg">
+            {topItems.map((currElem) => {
+              return (
+                <Box key={currElem.id} className="max-w-[255px] shadow-lg">
+                  <Box className=" bg-white-[200] flex items-center justify-center cursor-pointer"
+                  onClick={() => router.push(`/Product/${currElem.id}`)}>
+                    <Image
+                      className="w-[200px]"
+                      src={SampleProduct}
+                      alt="Sample Product"
+                    />
+                  </Box>
+                  <Box className="bg-white px-6 py-4 text-left">
+                    <Typography className="text-base text-blue-[900] font-medium">
+                      {currElem.productName}
+                    </Typography>
+                    <Typography className="font-xl text-right text-primary">
+                      ${currElem.productPrice}
+                    </Typography>
+                  </Box>
+                </Box>
+              );
+            })}
+            {/* <Box className="max-w-[255px] shadow-lg">
               <Box className=" bg-white-[200] flex items-center justify-center">
                 <Image
                   className="w-[200px]"
@@ -83,6 +81,23 @@ const PopularProducts = () => {
                 </Typography>
               </Box>
             </Box>
+            <Box className="max-w-[255px] shadow-lg">
+              <Box className=" bg-white-[200] flex items-center justify-center">
+                <Image
+                  className="w-[200px]"
+                  src={SampleProduct}
+                  alt="Sample Product"
+                />
+              </Box>
+              <Box className="bg-white px-6 py-4">
+                <Typography className="text-base text-blue-[900] font-medium">
+                  Spiced Mint
+                </Typography>
+                <Typography className="font-xl text-right text-primary">
+                  9.99$
+                </Typography>
+              </Box>
+            </Box> */}
           </Box>
         </Box>
       </Box>

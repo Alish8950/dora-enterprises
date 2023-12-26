@@ -24,7 +24,7 @@
       "id": 3,
       "productName": "Rum Classic",
       "productPrice": 39.99,
-      "averageRating": 4.0,
+      "averageRating": 4,
       "productImage": "https://dummyimage.com/300x200/996633/ffffff",
       "quantity": "700ml",
       "alcoholPercentage": 45,
@@ -80,6 +80,93 @@
       "alcoholPercentage": 12,
       "alcoholDescription": "Bubbly champagne, fine sparkling for celebrations."
     }
+  ],
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Lindsay Parker",
+      "rating": 5,
+      "user_image": "lindsay_parker.jpg",
+      "comment": "The Tequila Blanco is pure perfection! Smooth and great for sipping."
+    },
+    {
+      "id": 2,
+      "name": "Chris Anderson",
+      "rating": 4,
+      "user_image": "chris_anderson.png",
+      "comment": "Tried the Craft Lager - crisp and refreshing, just what I needed."
+    },
+    {
+      "id": 3,
+      "name": "Sophia Ramirez",
+      "rating": 5,
+      "user_image": "sophia_ramirez.jpg",
+      "comment": "The Merlot Reserve is my new favorite red wine. Rich and velvety!"
+    },
+    {
+      "id": 4,
+      "name": "Jake Roberts",
+      "rating": 4,
+      "user_image": "jake_roberts.jpeg",
+      "comment": "The Bourbon Blend has a unique flavor profile that I absolutely love."
+    },
+    {
+      "id": 5,
+      "name": "Ava Thompson",
+      "rating": 5,
+      "user_image": "ava_thompson.jpg",
+      "comment": "Sipped on the Chardonnay — elegant and refreshing. Highly recommend!"
+    },
+    {
+      "id": 6,
+      "name": "Daniel White",
+      "rating": 4,
+      "user_image": "daniel_white.png",
+      "comment": "The Rum Punch is a tropical delight. Perfect for beach vibes!"
+    },
+    {
+      "id": 7,
+      "name": "Mia Garcia",
+      "rating": 5,
+      "user_image": "mia_garcia.jpg",
+      "comment": "In love with the Sparkling Rosé. Effervescent and delightful!"
+    },
+    {
+      "id": 8,
+      "name": "Ethan Miller",
+      "rating": 4,
+      "user_image": "ethan_miller.jpeg",
+      "comment": "The Single Malt Scotch is a true gem. Smoky and smooth finish!"
+    },
+    {
+      "id": 9,
+      "name": "Isabella Martinez",
+      "rating": 5,
+      "user_image": "isabella_martinez.jpg",
+      "comment": "The Vodka Infusion is a game-changer for cocktails. So versatile!"
+    },
+    {
+      "id": 10,
+      "name": "Noah Brown",
+      "rating": 4,
+      "user_image": "noah_brown.png",
+      "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
+    }
+  ],
+  "cart": [
+    {
+      "id": "4",
+      "productName": "Gin Elegance",
+      "productPrice": 34.99,
+      "quantity": 10,
+      "productImage": "testImage"
+    },
+    {
+      "id": "1",
+      "productName": "Whiskey Deluxe",
+      "productPrice": 49.99,
+      "quantity": 1,
+      "productImage": "testImage"
+    }
   ]
-  
 }
