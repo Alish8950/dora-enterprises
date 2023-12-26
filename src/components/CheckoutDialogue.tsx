@@ -58,9 +58,6 @@ const CheckoutDialogue = () => {
   const SelectCountry = (event: SelectChangeEvent) => {
     setSelectCountry(event.target.value as string);
   };
-  useEffect(() => {
-    console.log(stepper);
-  }, [stepper]);
 
   // Custom Stepper Functions
   const handleNextStep = () => {

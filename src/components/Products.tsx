@@ -23,9 +23,9 @@ const baseURL = "http://localhost:5000";
 const Products = () => {
   // const customers = useContext(MyContext);
   const { products } = useGlobalProducts();
-  console.log(products)
+  // console.log(products)
   const [customers, setCustomers] = useState<MyData[]>([]);
-  console.log(customers, "customers")
+  // console.log(customers, "customers")
   const [editcustomers, setEditCustomers] = useState<MyData[]>([]);
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
@@ -106,7 +106,7 @@ const Products = () => {
   const handleClickOpen = (id: string) => {
     setOpen(true);
     setId(id);
-    console.log(userId);
+    // console.log(userId);
   };
 
   const handleClose = () => {

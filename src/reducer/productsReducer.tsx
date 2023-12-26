@@ -3,6 +3,11 @@ interface Product {
     id: string;
     productName: string;
     productPrice: number;
+    averageRating: number;
+    productImage: string;
+    quantity: string;
+    alcoholPercentage: number,
+    alcoholDescription: string;
   }
   
   export interface ProductState {

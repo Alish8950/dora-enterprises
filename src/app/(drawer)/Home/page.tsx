@@ -11,10 +11,6 @@ import Footer from "@/components/Footer";
 import { useGlobalProducts } from "../../../context/productList";
 
 export default function Home() {
-  const {products}  = useGlobalProducts();
-  useEffect(() => {
-    console.log(products, "dfhkdajfh")
-  },[products])
   return (
     <>
       <Box>

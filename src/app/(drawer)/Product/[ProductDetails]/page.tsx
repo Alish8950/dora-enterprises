@@ -15,26 +15,31 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useGlobalCart } from "@/context/cartContext";
 
 interface SingleProduct {
-  productName: string,
-  productPrice: number,
-  alcoholDescription: string,
-  alcoholPercentage: number,
-  quantity: string
+  productName: string;
+  productPrice: number;
+  alcoholDescription: string;
+  alcoholPercentage: number;
+  quantity: string;
 }
 
-
-const baseURL = 'http://localhost:5000';
+const baseURL = "http://localhost:5000";
 
 export default function Product({
   params,
 }: {
   params: { ProductDetails: string };
 }) {
-  const [quantity, setQuantity] = useState(0);
+  const router = useRouter();
+  const { cart, setCart } = useGlobalCart();
+  const [quantity, setQuantity] = useState(1);
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
-  const [productDetails, setProductDetails] = useState<SingleProduct | null>(null);
+  const [productDetails, setProductDetails] = useState<SingleProduct | null>(
+    null
+  );
+  const existingItem = cart.find(item => item.id === params.ProductDetails);
 
   //Weeks duration select
   const handlesubsDuration = (event: SelectChangeEvent) => {
@@ -55,9 +60,7 @@ export default function Product({
 
   const getSingleCustomer = async () => {
     try {
-      const res = await fetch(
-        `${baseURL}/products/${params.ProductDetails}`
-      );
+      const res = await fetch(`${baseURL}/products/${params.ProductDetails}`);
       const data = await res.json();
       setProductDetails(data);
       console.log(data);
@@ -66,12 +69,55 @@ export default function Product({
     }
   };
 
+  const addItemToCart = async () => {
+    try {
+      await fetch(`${baseURL}/cart`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: params.ProductDetails,
+          productName: productDetails?.productName,
+          productPrice: productDetails?.productPrice,
+          quantity: quantity,
+          productImage: "testImage",
+        }),
+      });
+      router.push("/Cart");
+    } catch (error) {
+      console.log(error, "can't add item to cart");
+    }
+  };
+
+  const updateItemQuantity = async (id: string) => {
+    try {
+      await fetch(`${baseURL}/cart/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          ...existingItem,
+          quantity: existingItem?.quantity + quantity,
+        }),
+      });
+      router.push("/Cart");
+    } catch (error) {}
+  };
+
+  const addOrUpdate = () => {
+    if(existingItem) {
+      updateItemQuantity(existingItem.id)
+    }
+    else{
+      addItemToCart();
+    }
+  }
+
   useEffect(() => {
     getSingleCustomer();
-  },[])
-  useEffect(() => {
-    console.log(productDetails, "dfgjhkbsaknd")
-  })
+  }, []);
   return (
     <>
       <Box className="max-w-[1111px] m-auto flex gap-[30px] w-full pt-[47px] pb-[114px]">
@@ -171,6 +217,7 @@ export default function Product({
                 </Box>
                 <Button
                   className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case w-full"
+                  onClick={() => addOrUpdate()}
                   startIcon={
                     <ShoppingCartOutlinedIcon className="text-white" />
                   }
@@ -182,16 +229,18 @@ export default function Product({
             <Box className="border border-grey-[300] mt-10 rounded-lg p-5 w-fit">
               <Typography>Key Features</Typography>
               <Typography className="text-base text-green-[200]">
-                <span className="text-grey-[700]">Description: </span>{productDetails?.alcoholDescription}
+                <span className="text-grey-[700]">Description: </span>
+                {productDetails?.alcoholDescription}
               </Typography>
-                <Typography className="text-base text-green-[200]">
-                <span className="text-grey-[700]">Quantity: </span>{productDetails?.quantity}
-                </Typography>
-                <Typography className="text-base text-green-[200]">
-                  <span className="text-grey-[700]">Alcohol Percentage: </span>{productDetails?.alcoholPercentage}%
-                </Typography>
-              <Box className="flex justify-between items-center max-w-[540px]">
-              </Box>
+              <Typography className="text-base text-green-[200]">
+                <span className="text-grey-[700]">Quantity: </span>
+                {productDetails?.quantity}
+              </Typography>
+              <Typography className="text-base text-green-[200]">
+                <span className="text-grey-[700]">Alcohol Percentage: </span>
+                {productDetails?.alcoholPercentage}%
+              </Typography>
+              <Box className="flex justify-between items-center max-w-[540px]"></Box>
             </Box>
           </Box>
         </Box>
