@@ -155,17 +155,10 @@
   ],
   "cart": [
     {
-      "id": "4",
-      "productName": "Gin Elegance",
-      "productPrice": 34.99,
-      "quantity": 10,
-      "productImage": "testImage"
-    },
-    {
       "id": "1",
       "productName": "Whiskey Deluxe",
       "productPrice": 49.99,
-      "quantity": 1,
+      "quantity": 2,
       "productImage": "testImage"
     }
   ]
