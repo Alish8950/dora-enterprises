@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 const PopularProducts = () => {
   const router = useRouter();
   const { products } = useGlobalProducts();
+  console.log(products, "productsproductsproducts")
 
   const sortedData = products.sort((a, b) => b.averageRating - a.averageRating);
 
