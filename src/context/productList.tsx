@@ -1,16 +1,33 @@
-// create a context
-// provider
-// consumer => useContext Hook
 "use client"
-import React, { createContext, useContext, useEffect, useReducer } from "react";
-import reducer, {  ProductState } from "@/reducer/productsReducer";
 
-interface AppContextProps {
-  children: React.ReactNode;
+import reducer from "@/reducer/productsReducer";
+import React, {
+  FC,
+  ReactNode,
+  useContext,
+  createContext,
+  useReducer,
+  useEffect,
+} from "react";
+
+const API = "http://localhost:5000/products";
+
+export interface Product {
+  id: string;
+  productName: string;
+  productPrice: number;
+  averageRating: number;
+  productImage: string;
+  quantity: string;
+  alcoholPercentage: number;
+  alcoholDescription: string;
 }
 
-const AppContext = createContext<ProductState | undefined>(undefined);
-const API = "http://localhost:5000/products";
+export interface ProductState {
+  isLoading: boolean;
+  isError: boolean;
+  products: Product[];
+}
 
 const initialState: ProductState = {
   isLoading: false,
@@ -18,9 +35,15 @@ const initialState: ProductState = {
   products: [],
 };
 
-const AppProvider: React.FC<AppContextProps> = ({ children }) => {
-  const [state, dispatch] = useReducer(reducer, initialState);
+const AppContext = createContext<ProductState | undefined>(undefined);
 
+interface AppContextProps {
+  children: ReactNode;
+}
+const AppProvider: FC<AppContextProps> = ({
+  children,
+}) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
   const getProducts = async (url: string) => {
     dispatch({ type: "SET_LOADING" });
     try {
@@ -34,8 +57,7 @@ const AppProvider: React.FC<AppContextProps> = ({ children }) => {
 
   useEffect(() => {
     getProducts(API);
-  }, []);
-
+  },[])
   return (
     <AppContext.Provider value={{ ...state }}>
       {children}
@@ -43,13 +65,14 @@ const AppProvider: React.FC<AppContextProps> = ({ children }) => {
   );
 };
 
-// custom hook
-const useGlobalProducts = (): ProductState => {
+const useGlobalProducts = () => {
   const context = useContext(AppContext);
-  if (!context) {
-    throw new Error("useProductContext must be used within a AppProvider");
+  if (context === undefined) {
+    throw new Error(
+      "useGlobalProducts must be used within a AppProvider"
+    );
   }
   return context;
 };
 
-export { AppProvider, AppContext, useGlobalProducts };
+export { AppProvider, useGlobalProducts };
