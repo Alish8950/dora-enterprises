@@ -7,8 +7,6 @@ import Products from "@/components/Products";
 import LearnMore from "@/components/LearnMore";
 import Testimonials from "@/components/Testimonials";
 import PopularProducts from "@/components/PopularProducts";
-import Footer from "@/components/Footer";
-import { useGlobalProducts } from "../../../context/productList";
 
 export default function Home() {
   return (

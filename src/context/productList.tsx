@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import reducer from "@/reducer/productsReducer";
 import React, {
@@ -27,12 +27,14 @@ export interface ProductState {
   isLoading: boolean;
   isError: boolean;
   products: Product[];
+  increamentValue: (index: number) => void;
 }
 
 const initialState: ProductState = {
   isLoading: false,
   isError: false,
   products: [],
+  increamentValue: () => {}, // Placeholder function
 };
 
 const AppContext = createContext<ProductState | undefined>(undefined);
@@ -40,9 +42,7 @@ const AppContext = createContext<ProductState | undefined>(undefined);
 interface AppContextProps {
   children: ReactNode;
 }
-const AppProvider: FC<AppContextProps> = ({
-  children,
-}) => {
+const AppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const getProducts = async (url: string) => {
     dispatch({ type: "SET_LOADING" });
@@ -55,11 +55,15 @@ const AppProvider: FC<AppContextProps> = ({
     }
   };
 
+  const increamentValue = (index: number) => {
+    return console.log(index);
+  };
+
   useEffect(() => {
     getProducts(API);
-  },[])
+  }, []);
   return (
-    <AppContext.Provider value={{ ...state }}>
+    <AppContext.Provider value={{ ...state, increamentValue }}>
       {children}
     </AppContext.Provider>
   );
@@ -68,9 +72,7 @@ const AppProvider: FC<AppContextProps> = ({
 const useGlobalProducts = () => {
   const context = useContext(AppContext);
   if (context === undefined) {
-    throw new Error(
-      "useGlobalProducts must be used within a AppProvider"
-    );
+    throw new Error("useGlobalProducts must be used within a AppProvider");
   }
   return context;
 };

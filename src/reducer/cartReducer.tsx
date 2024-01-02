@@ -1,17 +1,7 @@
 "use client";
-export interface Cart {
-  id: string;
-  productName: string;
-  productPrice: number;
-  quantity: number;
-  productImage: string;
-}
 
-export interface CartState {
-  isLoading: boolean;
-  isError: boolean;
-  cart: Cart[];
-}
+import { Cart, CartState } from "@/context/cartContext";
+
 
 type CartAction =
   | { type: "SET_LOADING" }
