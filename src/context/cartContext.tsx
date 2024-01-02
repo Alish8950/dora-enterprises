@@ -1,14 +1,29 @@
 "use client";
 
 import React, { FC, ReactNode, createContext, useContext, useEffect, useReducer } from "react";
-import reducer, { CartState, Cart } from "@/reducer/cartReducer";
+import reducer from "@/reducer/cartReducer";
+
+export interface Cart {
+  id: string;
+  productName: string;
+  productPrice: number;
+  quantity: number;
+  productImage: string;
+}
+
+export interface CartState {
+  isLoading: boolean;
+  isError: boolean;
+  cart: Cart[];
+  setCart: (cart: Cart[]) => void;
+}
 
 interface AppContextProps {
   children: ReactNode;
 }
 
 interface CartContextType extends CartState {
-  setCart: (cart: Cart[]) => void;
+  
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -18,6 +33,7 @@ const initialState: CartState = {
   isLoading: false,
   isError: false,
   cart: [],
+  setCart: () => {}
 };
 
 

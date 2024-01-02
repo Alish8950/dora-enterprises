@@ -1,17 +1,7 @@
 "use client"
-interface Testimonials {
-    id: number,
-    name: string,
-    rating: number,
-    user_image: string,
-    comment: string
-}
 
-export interface TestimonialState {
-    isLoading: boolean;
-    isError: boolean;
-    testimonials: Testimonials[]
-}
+import { TestimonialState, Testimonials } from "@/context/testimonialsContext";
+
 
 type TestimonialAction = 
 | { type: "SET_LOADING" }

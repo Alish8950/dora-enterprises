@@ -1,7 +1,21 @@
 "use client";
 
 import React, { FC, ReactNode, createContext, useContext, useEffect, useReducer } from "react";
-import reducer, { TestimonialState } from "@/reducer/testimonialsReducer";
+import reducer from "@/reducer/testimonialsReducer";
+
+export interface Testimonials {
+  id: number,
+  name: string,
+  rating: number,
+  user_image: string,
+  comment: string
+}
+
+export interface TestimonialState {
+  isLoading: boolean;
+  isError: boolean;
+  testimonials: Testimonials[]
+}
 
 interface AppContextProps {
   children: ReactNode;
@@ -42,7 +56,7 @@ const TestimonialsProvider: FC<AppContextProps> = ({ children }) => {
 };
 
 // custom hook
-const useGlobalTestimonials = (): TestimonialState => {
+const useGlobalTestimonials = () => {
     const context = useContext(TestimonialsContext);
     if (!context) {
         throw new Error("useGlobalTestimonials must be used within a AppProvider");
