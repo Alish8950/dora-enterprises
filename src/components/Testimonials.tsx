@@ -15,13 +15,8 @@ const shuffleArray = (array: any) => {
 };
 
 const Testimonials = () => {
-  const { testimonials } = useGlobalTestimonials();
-  // Shuffle the testimonials array
-  const shuffledTestimonials = shuffleArray([...testimonials]);
+  const { randomTestimonials } = useGlobalTestimonials();
 
-  // Display only the first 3 items
-  const selectedTestimonials = shuffledTestimonials.slice(0, 3);
-  // console.log(testimonials, "testimonials");
   return (
     <Box className="bg-primary-light">
       <Box className="py-[90px] text-center max-w-[1111px] m-auto">
@@ -32,7 +27,7 @@ const Testimonials = () => {
           Some quotes from our happy customers
         </Typography>
         <Box className="flex items-center gap-8 justify-center">
-          {selectedTestimonials.map((testi: any) => {
+          {randomTestimonials.map((testi: any) => {
             return (
               <Box key={testi.id} className="bg-white max-w-[350px] py-8 flex flex-col justify-center items-center shadow-sm">
                 <Image
@@ -54,60 +49,6 @@ const Testimonials = () => {
               </Box>
             );
           })}
-          {/* <Box className="bg-white max-w-[350px] py-8 flex flex-col justify-center items-center shadow-sm">
-            <Image
-              src={DummyProfile}
-              alt="kafh"
-              className="inline-block h-12 w-12 rounded-full"
-            />
-            <Box className="mt-4 mb-5 flex items-center gap-1">
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-            </Box>
-            <Typography className="text-[22px] max-w-[304px] text-blue-[900] mb-2">
-              “I love it! No more air fresheners”
-            </Typography>
-            <Typography className="text-lg text-grey-[500]">Luisa</Typography>
-          </Box>
-          <Box className="bg-white max-w-[350px] py-8 flex flex-col justify-center items-center shadow-sm">
-            <Image
-              src={DummyProfile}
-              alt="kafh"
-              className="inline-block h-12 w-12 rounded-full"
-            />
-            <Box className="mt-4 mb-5 flex items-center gap-1">
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-            </Box>
-            <Typography className="text-[22px] max-w-[304px] text-blue-[900] mb-2">
-              “I love it! No more air fresheners”
-            </Typography>
-            <Typography className="text-lg text-grey-[500]">Luisa</Typography>
-          </Box>
-          <Box className="bg-white max-w-[350px] py-8 flex flex-col justify-center items-center shadow-sm">
-            <Image
-              src={DummyProfile}
-              alt="kafh"
-              className="inline-block h-12 w-12 rounded-full"
-            />
-            <Box className="mt-4 mb-5 flex items-center gap-1">
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-              <StarIcon className="text-primary" />
-            </Box>
-            <Typography className="text-[22px] max-w-[304px] text-blue-[900] mb-2">
-              “I love it! No more air fresheners”
-            </Typography>
-            <Typography className="text-lg text-grey-[500]">Luisa</Typography>
-          </Box> */}
         </Box>
       </Box>
     </Box>

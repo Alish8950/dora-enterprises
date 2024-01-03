@@ -7,13 +7,7 @@ import { useRouter } from "next/navigation";
 
 const PopularProducts = () => {
   const router = useRouter();
-  const { products } = useGlobalProducts();
-  console.log(products, "productsproductsproducts")
-
-  const sortedData = products.sort((a, b) => b.averageRating - a.averageRating);
-
-  const topItems = sortedData.slice(0, 4);
-
+  const { popularProducts } = useGlobalProducts();
 
   return (
     <>
@@ -26,7 +20,7 @@ const PopularProducts = () => {
             Our top selling product that you may like
           </Typography>
           <Box className="grid grid-cols-4 gap-8">
-            {topItems.map((currElem) => {
+            {popularProducts.map((currElem) => {
               return (
                 <Box key={currElem.id} className="max-w-[255px] shadow-lg">
                   <Box className=" bg-white-[200] flex items-center justify-center cursor-pointer"
