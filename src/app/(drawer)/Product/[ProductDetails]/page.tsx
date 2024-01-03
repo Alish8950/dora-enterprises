@@ -14,16 +14,8 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import { useRouter, useSearchParams } from "next/navigation";
 import { useGlobalCart } from "@/context/cartContext";
-
-interface SingleProduct {
-  productName: string;
-  productPrice: number;
-  alcoholDescription: string;
-  alcoholPercentage: number;
-  quantity: string;
-}
+import { useGlobalProducts } from "@/context/productList";
 
 const baseURL = "http://localhost:5000";
 
@@ -32,14 +24,16 @@ export default function Product({
 }: {
   params: { ProductDetails: string };
 }) {
-  const router = useRouter();
-  const { cart, setCart } = useGlobalCart();
+  const { getSingleProduct, singleProduct } = useGlobalProducts();
+  const { cart, addItemToCart, updateItemQuantity } = useGlobalCart();
   const [quantity, setQuantity] = useState(1);
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
-  const [productDetails, setProductDetails] = useState<SingleProduct | null>(
-    null
-  );
-  const existingItem = cart.find(item => item.id === params.ProductDetails);
+
+  const existingItem = cart.find((item) => item.id === params.ProductDetails);
+  
+  useEffect(() => {
+    getSingleProduct(params.ProductDetails);
+  }, [existingItem]);
 
   //Weeks duration select
   const handlesubsDuration = (event: SelectChangeEvent) => {
@@ -58,66 +52,22 @@ export default function Product({
     }
   };
 
-  const getSingleCustomer = async () => {
-    try {
-      const res = await fetch(`${baseURL}/products/${params.ProductDetails}`);
-      const data = await res.json();
-      setProductDetails(data);
-      console.log(data);
-    } catch (error) {
-      console.log("Can't get data ", error);
-    }
-  };
-
-  const addItemToCart = async () => {
-    try {
-      await fetch(`${baseURL}/cart`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: params.ProductDetails,
-          productName: productDetails?.productName,
-          productPrice: productDetails?.productPrice,
-          quantity: quantity,
-          productImage: "testImage",
-        }),
-      });
-      router.push("/Cart");
-    } catch (error) {
-      console.log(error, "can't add item to cart");
-    }
-  };
-
-  const updateItemQuantity = async (id: string) => {
-    try {
-      await fetch(`${baseURL}/cart/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...existingItem,
-          quantity: existingItem?.quantity + quantity,
-        }),
-      });
-      router.push("/Cart");
-    } catch (error) {}
-  };
-
   const addOrUpdate = () => {
-    if(existingItem) {
-      updateItemQuantity(existingItem.id)
+    if (existingItem) {
+      updateItemQuantity(existingItem.id, existingItem, quantity);
+    } else {
+      if (singleProduct?.productName !== undefined) {
+        addItemToCart(
+          params.ProductDetails,
+          singleProduct?.productName,
+          singleProduct?.productPrice,
+          quantity,
+          "testImage"
+        );
+      }
     }
-    else{
-      addItemToCart();
-    }
-  }
+  };
 
-  useEffect(() => {
-    getSingleCustomer();
-  }, []);
   return (
     <>
       <Box className="max-w-[1111px] m-auto flex gap-[30px] w-full pt-[47px] pb-[114px]">
@@ -138,12 +88,12 @@ export default function Product({
         <Box className="w-full">
           <Box>
             <Typography className="text-secondary text-[26px] font-medium mb-4">
-              {productDetails?.productName}
+              {singleProduct?.productName}
             </Typography>
             <Box className="flex justify-between w-full">
               <Box>
                 <Typography className="text-primary font-medium text-[26px] mb-8">
-                  ${productDetails?.productPrice}
+                  ${singleProduct?.productPrice}
                 </Typography>
                 <Box>
                   <Typography className="mb-2">Quantity</Typography>
@@ -230,15 +180,15 @@ export default function Product({
               <Typography>Key Features</Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Description: </span>
-                {productDetails?.alcoholDescription}
+                {singleProduct?.alcoholDescription}
               </Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Quantity: </span>
-                {productDetails?.quantity}
+                {singleProduct?.quantity}
               </Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Alcohol Percentage: </span>
-                {productDetails?.alcoholPercentage}%
+                {singleProduct?.alcoholPercentage}%
               </Typography>
               <Box className="flex justify-between items-center max-w-[540px]"></Box>
             </Box>

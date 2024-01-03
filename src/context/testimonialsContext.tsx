@@ -1,34 +1,44 @@
 "use client";
 
-import React, { FC, ReactNode, createContext, useContext, useEffect, useReducer } from "react";
+import React, {
+  FC,
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import reducer from "@/reducer/testimonialsReducer";
 
+interface AppContextProps {
+  children: ReactNode;
+}
 export interface Testimonials {
-  id: number,
-  name: string,
-  rating: number,
-  user_image: string,
-  comment: string
+  id: number;
+  name: string;
+  rating: number;
+  user_image: string;
+  comment: string;
 }
 
 export interface TestimonialState {
   isLoading: boolean;
   isError: boolean;
-  testimonials: Testimonials[]
+  testimonials: Testimonials[];
+  randomTestimonials: Testimonials[];
 }
-
-interface AppContextProps {
-  children: ReactNode;
-}
-
-const TestimonialsContext = createContext<TestimonialState | undefined>(undefined);
-const API_URL = "http://localhost:5000/testimonials";
 
 const initialState: TestimonialState = {
   isLoading: false,
   isError: false,
   testimonials: [],
+  randomTestimonials: [],
 };
+
+const TestimonialsContext = createContext<TestimonialState | undefined>(
+  undefined
+);
+const API_URL = "http://localhost:5000/testimonials";
 
 const TestimonialsProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -46,22 +56,22 @@ const TestimonialsProvider: FC<AppContextProps> = ({ children }) => {
 
   useEffect(() => {
     getTestimonials(API_URL);
-  },[])
+  }, []);
 
-  return(
-    <TestimonialsContext.Provider value={{...state}}>
-        {children}
+  return (
+    <TestimonialsContext.Provider value={{ ...state }}>
+      {children}
     </TestimonialsContext.Provider>
-  )
+  );
 };
 
 // custom hook
 const useGlobalTestimonials = () => {
-    const context = useContext(TestimonialsContext);
-    if (!context) {
-        throw new Error("useGlobalTestimonials must be used within a AppProvider");
-      }
-      return context
-}
+  const context = useContext(TestimonialsContext);
+  if (!context) {
+    throw new Error("useGlobalTestimonials must be used within a AppProvider");
+  }
+  return context;
+};
 
-export {TestimonialsProvider, TestimonialsContext, useGlobalTestimonials}
+export { TestimonialsProvider, TestimonialsContext, useGlobalTestimonials };

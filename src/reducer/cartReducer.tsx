@@ -6,8 +6,7 @@ import { Cart, CartState } from "@/context/cartContext";
 type CartAction =
   | { type: "SET_LOADING" }
   | { type: "API_ERROR" }
-  | { type: "MY_API_DATA"; payload: Cart[] }
-  | { type: "SET_CART"; payload: Cart[] }; // New action type
+  | { type: "MY_API_DATA"; payload: Cart[] };
 
 const cartReducer = (state: CartState, action: CartAction): CartState => {
   switch (action.type) {
@@ -29,11 +28,6 @@ const cartReducer = (state: CartState, action: CartAction): CartState => {
         ...state,
         isLoading: false,
         isError: false,
-        cart: action.payload,
-      };
-    case "SET_CART":
-      return {
-        ...state,
         cart: action.payload,
       };
 
