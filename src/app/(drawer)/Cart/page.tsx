@@ -14,42 +14,74 @@ import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
 
-
-
 export default function Cart() {
-  const { cart } = useGlobalCart();
-  console.log(cart, "cart");
-  const [quantity, setQuantity] = useState<number[]>([]);
+  const { cart, updateItemQuantity } = useGlobalCart();
+  const [quantitys, setQuantity] = useState<number[]>([]);
   const totalPrice = cart.reduce((total, currentItem, index) => {
-    return total + currentItem.productPrice * quantity[index];
+    return total + currentItem.productPrice * quantitys[index];
   }, 0);
 
   useEffect(() => {
     // Create an array of quantities from the cart items
-    const quantities = cart.map(item => item.quantity);
+    const quantities = cart.map((item) => item.quantity);
 
     // Update the vals state
     setQuantity(quantities);
   }, [cart]);
 
   // Function to increase quantity
-const increaseQuantity = (index: number) => {
-  setQuantity(quantity.map((qty, i) => {
-    if (i === index) {
-      return qty + 1;
-    }
-    return qty;
-  }));
-};
-// Function to decrease quantity
-const decreaseQuantity = (index: number) => {
-  setQuantity(quantity.map((qty, i) => {
-    if (i === index && qty > 1) { // Prevents quantity from going below 1
-      return qty - 1;
-    }
-    return qty;
-  }));
-};
+  const increaseQuantity = (
+    index: number,
+    id: string,
+    productImage: string,
+    productName: string,
+    productPrice: number,
+    quantity: number
+  ) => {
+    const existingItem = {
+      id,
+      productImage,
+      productName,
+      productPrice,
+      quantity
+    };
+    setQuantity(
+      quantitys.map((qty, i) => {
+        if (i === index) {
+          return qty + 1;
+        }
+        return qty;
+      })
+    );
+    updateItemQuantity(id, quantitys[index] + 1, existingItem, true);
+  };
+  // Function to decrease quantity
+  const decreaseQuantity = (
+    index: number,
+    id: string,
+    productImage: string,
+    productName: string,
+    productPrice: number,
+    quantity: number
+  ) => {
+    const existingItem = {
+      id,
+      productImage,
+      productName,
+      productPrice,
+      quantity
+    };
+    setQuantity(
+      quantitys.map((qty, i) => {
+        if (i === index && qty > 1) {
+          // Prevents quantity from going below 1
+          return qty - 1;
+        }
+        return qty;
+      })
+    );
+    updateItemQuantity(id, quantitys[index] - 1, existingItem, true);
+  };
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
@@ -98,23 +130,43 @@ const decreaseQuantity = (index: number) => {
                         <Box className="flex items-center border border-primary justify-between w-[75px]">
                           <RemoveIcon
                             className={`text-xl cursor-pointer ${
-                              quantity[index] !== 1
+                              quantitys[index] !== 1
                                 ? "text-primary"
                                 : "text-grey-[200]"
                             }`}
-                            onClick={() => decreaseQuantity(index)}
+                            onClick={() =>
+                              decreaseQuantity(
+                                index,
+                                cart.id,
+                                cart.productImage,
+                                cart.productName,
+                                cart.productPrice,
+                                quantitys[index]
+                              )
+                            }
                             // onClick={() => updateQuantity(cart.id, false)}
-                            />
-                          <Typography>{quantity[index]}</Typography>
-                          <AddIcon 
+                          />
+                          <Typography>{quantitys[index]}</Typography>
+                          <AddIcon
                             className="text-xl text-primary cursor-pointer"
-                            onClick={() => increaseQuantity(index)}
+                            onClick={() =>
+                              increaseQuantity(
+                                index,
+                                cart.id,
+                                cart.productImage,
+                                cart.productName,
+                                cart.productPrice,
+                                quantitys[index]
+                              )
+                            }
                             // onClick={() => updateQuantity(cart.id, true)}
                           />
                         </Box>
                       </TableCell>
                       <TableCell align="left" className="text-lg font-medium">
-                      ${cart.productPrice * quantity[index] }
+                        $
+                        {Math.round(cart.productPrice * quantitys[index] * 100) /
+                          100}
                       </TableCell>
                     </TableRow>
                   );
@@ -124,12 +176,12 @@ const decreaseQuantity = (index: number) => {
           </TableContainer>
           <Box className="text-right mt-7">
             <Typography className="text-xl text-secondary font-medium">
-              Sub-total: ${totalPrice}
+              Sub-total: ${Math.round(totalPrice * 100) / 100}
             </Typography>
             {/* <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4">
               Check-out
             </Button> */}
-            <CheckoutDialogue />
+            <CheckoutDialogue cart={cart} />
             <Typography className="text-base text-grey-[100] ">
               Tax and shipping cost will be calculated later
             </Typography>

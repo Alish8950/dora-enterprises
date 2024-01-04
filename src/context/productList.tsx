@@ -29,7 +29,6 @@ export interface ProductState {
   products: Product[];
   popularProducts: Product[];
   singleProduct: Product | null;
-  increamentValue: (index: number) => void;
   getSingleProduct: (params: string) => void
 }
 
@@ -39,7 +38,6 @@ const initialState: ProductState = {
   products: [],
   popularProducts: [],
   singleProduct: null,
-  increamentValue: () => {}, 
   getSingleProduct: () => {}, 
 };
 
@@ -65,22 +63,16 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
       const res = await fetch(`http://localhost:5000/products/${params}`);
       const data = await res.json();
       dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
-      // setProductDetails(data);
-      console.log(data);
     } catch (error) {
       console.log("Can't get data ", error);
     }
-  };
-
-  const increamentValue = (index: number) => {
-    return console.log(index);
   };
 
   useEffect(() => {
     getProducts(API);
   }, []);
   return (
-    <AppContext.Provider value={{ ...state, increamentValue, getSingleProduct }}>
+    <AppContext.Provider value={{ ...state, getSingleProduct }}>
       {children}
     </AppContext.Provider>
   );

@@ -39,7 +39,7 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CheckoutDialogue = () => {
+const CheckoutDialogue = (cart: any) => {
   // Dialogue Box State
   const [open, setOpen] = useState(false);
   // Custom Stepper State
@@ -49,6 +49,7 @@ const CheckoutDialogue = () => {
 
   // Dialogue Functions
   const handleClickOpen = () => {
+    console.log(cart)
     setOpen(true);
   };
   const handleClose = () => {
