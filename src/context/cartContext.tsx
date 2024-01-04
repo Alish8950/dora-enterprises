@@ -7,6 +7,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
+  useState,
 } from "react";
 import reducer from "@/reducer/cartReducer";
 import { useRouter } from "next/navigation";
@@ -30,10 +31,15 @@ export interface CartState {
     params: string,
     productName: string,
     productPrice: number,
-    quantity: number, 
+    quantity: number,
     productImage: string
   ) => void;
-  updateItemQuantity: (id: string, existingItem: Cart, quantity: number) => void
+  updateItemQuantity: (
+    id: string,
+    quantity: number,
+    existingItem: Cart,
+    cartQuantity: boolean
+  ) => void;
 }
 
 const initialState: CartState = {
@@ -52,7 +58,7 @@ const API_URL = "http://localhost:5000/cart";
 const CartProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const router = useRouter();
-  
+
   // get cart items
   const getCart = async (url: string) => {
     dispatch({ type: "SET_LOADING" });
@@ -64,7 +70,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
       dispatch({ type: "API_ERROR" });
     }
   };
-  
+
   // add items to cart
   const addItemToCart = async (
     params: string,
@@ -93,7 +99,12 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     }
   };
 
-  const updateItemQuantity = async (id: string, existingItem: Cart, quantity: number) => {
+  const updateItemQuantity = async (
+    id: string,
+    quantity: number,
+    existingItem: Cart,
+    cartQuantity: boolean
+  ) => {
     try {
       if (existingItem && existingItem.quantity !== undefined) {
         await fetch(`http://localhost:5000/cart/${id}`, {
@@ -103,12 +114,17 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
           },
           body: JSON.stringify({
             ...existingItem,
-            quantity: existingItem.quantity + quantity,
+            quantity: cartQuantity
+              ? quantity
+              : existingItem.quantity + quantity,
           }),
         });
+        console.log("Update done");
+        router.push("/Cart");
       }
-      router.push("/Cart");
-    } catch (error) {}
+    } catch (error) {
+      console.log("Can't update cart => ", error);
+    }
   };
 
   useEffect(() => {
@@ -116,7 +132,9 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
   }, []);
 
   return (
-    <CartContext.Provider value={{ ...state, addItemToCart, updateItemQuantity }}>
+    <CartContext.Provider
+      value={{ ...state, addItemToCart, updateItemQuantity }}
+    >
       {children}
     </CartContext.Provider>
   );

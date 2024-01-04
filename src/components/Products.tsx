@@ -23,9 +23,7 @@ const baseURL = "http://localhost:5000";
 const Products = () => {
   // const customers = useContext(MyContext);
   const { products } = useGlobalProducts();
-  // console.log(products)
   const [customers, setCustomers] = useState<MyData[]>([]);
-  // console.log(customers, "customers")
   const [editcustomers, setEditCustomers] = useState<MyData[]>([]);
   const [editName, setEditName] = useState("");
   const [editNumber, setEditNumber] = useState("");
@@ -45,7 +43,6 @@ const Products = () => {
 
   useEffect(() => {
     getData(API_URL);
-    // console.log(customers)
   }, []);
 
   const handleDelete = async (id: string) => {
@@ -81,7 +78,6 @@ const Products = () => {
     }
   };
   const editData = async (id: string) => {
-    // console.log(editName, editNumber);
     try {
       await fetch(`${baseURL}/products/${id}`, {
         method: "PUT",
@@ -106,7 +102,6 @@ const Products = () => {
   const handleClickOpen = (id: string) => {
     setOpen(true);
     setId(id);
-    // console.log(userId);
   };
 
   const handleClose = () => {

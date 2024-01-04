@@ -30,10 +30,17 @@ export default function Product({
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
 
   const existingItem = cart.find((item) => item.id === params.ProductDetails);
-  
+  console.log(existingItem, "existingItem")
+
   useEffect(() => {
     getSingleProduct(params.ProductDetails);
-  }, [existingItem]);
+  }, []);
+
+  useEffect(() => {
+    getSingleProduct(params.ProductDetails);
+    // Reset quantity to 1 or a default value whenever the product changes
+    setQuantity(1);
+  }, [params.ProductDetails]);
 
   //Weeks duration select
   const handlesubsDuration = (event: SelectChangeEvent) => {
@@ -54,7 +61,7 @@ export default function Product({
 
   const addOrUpdate = () => {
     if (existingItem) {
-      updateItemQuantity(existingItem.id, existingItem, quantity);
+      updateItemQuantity(existingItem.id, quantity, existingItem, false);
     } else {
       if (singleProduct?.productName !== undefined) {
         addItemToCart(
@@ -167,7 +174,7 @@ export default function Product({
                 </Box>
                 <Button
                   className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case w-full"
-                  onClick={() => addOrUpdate()}
+                  onClick={addOrUpdate}
                   startIcon={
                     <ShoppingCartOutlinedIcon className="text-white" />
                   }
