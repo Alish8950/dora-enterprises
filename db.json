@@ -155,10 +155,24 @@
   ],
   "cart": [
     {
-      "id": "1",
-      "productName": "Whiskey Deluxe",
-      "productPrice": 49.99,
-      "quantity": 2,
+      "id": "6",
+      "productImage": "testImage",
+      "productName": "Brandy Select",
+      "productPrice": 54.99,
+      "quantity": 3
+    },
+    {
+      "id": "4",
+      "productImage": "testImage",
+      "productName": "Gin Elegance",
+      "productPrice": 34.99,
+      "quantity": 1
+    },
+    {
+      "id": "8",
+      "productName": "Champagne Celebration",
+      "productPrice": 69.99,
+      "quantity": 3,
       "productImage": "testImage"
     }
   ]

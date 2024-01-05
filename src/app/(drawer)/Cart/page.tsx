@@ -13,10 +13,12 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
+import {Cart as CartInterface} from '../../../context/cartContext'
 
 export default function Cart() {
   const { cart, updateItemQuantity } = useGlobalCart();
   const [quantitys, setQuantity] = useState<number[]>([]);
+  const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([])
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
@@ -24,6 +26,8 @@ export default function Cart() {
   useEffect(() => {
     // Create an array of quantities from the cart items
     const quantities = cart.map((item) => item.quantity);
+
+    setUpdatedCart(cart);
 
     // Update the vals state
     setQuantity(quantities);
@@ -82,6 +86,45 @@ export default function Cart() {
     );
     updateItemQuantity(id, quantitys[index] - 1, existingItem, true);
   };
+
+  const handleDelete = async (id: string) => {
+    try {
+      await fetch(`http://localhost:5000/cart/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setUpdatedCart((prevData) => prevData.filter((item) => item.id !== id));
+    } catch (error) {
+      console.log("Cannot Delete => ", error);
+    }
+  };
+
+  async function deleteAllItems(): Promise<void> {
+    try {
+        // Step 1: Fetch the list of items
+        const response = await fetch('http://localhost:5000/cart');
+        const items: CartInterface[] = await response.json();
+
+        // Step 2: Iterate through the items and delete them
+        for (const item of items) {
+            const deleteResponse = await fetch(`http://localhost:5000/cart/${item.id}`, {
+                method: 'DELETE'
+            });
+
+            if (!deleteResponse.ok) {
+                throw new Error(`Failed to delete item with ID ${item.id}`);
+            }
+
+            console.log(`Item with ID ${item.id} deleted.`);
+        }
+        setUpdatedCart([])
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
@@ -105,7 +148,7 @@ export default function Cart() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {cart.map((cart, index) => {
+                {updatedCart.map((cart, index) => {
                   return (
                     <TableRow key={cart.id}>
                       <TableCell component="th" scope="row">
@@ -117,7 +160,7 @@ export default function Cart() {
                             <Typography className="text-[26px] text-secondary mb-5 font-medium">
                               {cart.productName}
                             </Typography>
-                            <Link className="text-lg" href="#">
+                            <Link className="text-lg cursor-pointer" onClick={() => handleDelete(cart.id)}>
                               Remove
                             </Link>
                           </Box>
@@ -174,6 +217,9 @@ export default function Cart() {
               </TableBody>
             </Table>
           </TableContainer>
+          <Box className="w-full flex items-end justify-end">
+            <Link className="cursor-pointer" onClick={deleteAllItems}>Clear Cart</Link>
+          </Box>
           <Box className="text-right mt-7">
             <Typography className="text-xl text-secondary font-medium">
               Sub-total: ${Math.round(totalPrice * 100) / 100}
@@ -181,7 +227,7 @@ export default function Cart() {
             {/* <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4">
               Check-out
             </Button> */}
-            <CheckoutDialogue cart={cart} />
+            <CheckoutDialogue cart={updatedCart} />
             <Typography className="text-base text-grey-[100] ">
               Tax and shipping cost will be calculated later
             </Typography>

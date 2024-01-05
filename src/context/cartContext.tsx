@@ -27,6 +27,8 @@ export interface CartState {
   isLoading: boolean;
   isError: boolean;
   cart: Cart[];
+  totalCartQuantity: number;
+  calculateTotalQuantity: () => void;
   addItemToCart: (
     params: string,
     productName: string,
@@ -46,6 +48,8 @@ const initialState: CartState = {
   isLoading: false,
   isError: false,
   cart: [],
+  totalCartQuantity: 0,
+  calculateTotalQuantity: () => {return 1},
   addItemToCart: () => {},
   updateItemQuantity: () => {},
 };
@@ -57,6 +61,7 @@ const API_URL = "http://localhost:5000/cart";
 
 const CartProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [totalCartQuantity, setTotalCartQuantity] = useState(0)
   const router = useRouter();
 
   // get cart items
@@ -127,13 +132,19 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     }
   };
 
+  const calculateTotalQuantity = () => {
+    setTotalCartQuantity(state.cart.reduce((total, item) => total + item.quantity, 0))
+  };
+
+
+
   useEffect(() => {
     getCart(API_URL);
   }, []);
 
   return (
     <CartContext.Provider
-      value={{ ...state, addItemToCart, updateItemQuantity }}
+      value={{ ...state, addItemToCart, updateItemQuantity, calculateTotalQuantity, totalCartQuantity }}
     >
       {children}
     </CartContext.Provider>
