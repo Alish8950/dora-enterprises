@@ -32,7 +32,7 @@ export default function Home() {
                 all your pleasure moments
               </Typography>
               <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case">
-                Discovery our collection
+                Discover our collection
               </Button>
               <Box></Box>
             </Box>

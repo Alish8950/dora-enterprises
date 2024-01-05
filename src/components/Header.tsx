@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import EcomLogo from "../assets/images/ecom_logo.svg";
@@ -10,13 +10,16 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
+import { useGlobalCart } from "@/context/cartContext";
 
 const options = ["None", "Atria", "Callisto"];
 const ITEM_HEIGHT = 48;
 
 const Header = () => {
-  const router = useRouter()
+  const router = useRouter();
+  const { cart, calculateTotalQuantity, totalCartQuantity } = useGlobalCart();
+  const [totalQuantity, setTotalQuantity] = useState(0)
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,11 +28,16 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  useEffect(() => {
+    // const totalQuantitys = calculateTotalQuantity();
+    setTotalQuantity(totalCartQuantity)
+  }, [cart]);
   return (
     <>
       <Box className="sticky top-0 bg-white z-10 border-b border-green-[100]">
         <Box className="flex justify-between items-center max-w-[77%] m-auto h-[75px]">
-          <Box className='cursor-pointer' onClick={() => router.push('/Home')}>
+          <Box className="cursor-pointer" onClick={() => router.push("/Home")}>
             <Image src={EcomLogo} alt="logo" />
           </Box>
           <Box className="flex items-center gap-4">
@@ -91,7 +99,13 @@ const Header = () => {
           </Box>
           <Box className="flex items-center flex-between gap-4">
             <Person4OutlinedIcon />
-            <ShoppingCartOutlinedIcon className="cursor-pointer" onClick={() => router.push('/Cart')}/>
+            <Box className="relative">
+              <ShoppingCartOutlinedIcon
+                className="cursor-pointer"
+                onClick={() => router.push("/Cart")}
+              />
+              <Box className="absolute top-0">{totalQuantity}</Box>
+            </Box>
           </Box>
         </Box>
       </Box>

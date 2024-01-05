@@ -29,6 +29,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Logo from "../assets/images/ecom_logo.svg";
 import FormLabel from "@mui/material/FormLabel";
 import Image from "next/image";
+import { Cart } from "@/context/cartContext";
+
+interface ChildComponentProps {
+  cart: Cart[];
+}
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -39,7 +44,8 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CheckoutDialogue = (cart: any) => {
+const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
+  console.log(cart)
   // Dialogue Box State
   const [open, setOpen] = useState(false);
   // Custom Stepper State
@@ -49,7 +55,7 @@ const CheckoutDialogue = (cart: any) => {
 
   // Dialogue Functions
   const handleClickOpen = () => {
-    console.log(cart)
+    console.log(cart);
     setOpen(true);
   };
   const handleClose = () => {
@@ -331,7 +337,28 @@ const CheckoutDialogue = (cart: any) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      <TableRow
+                      {cart.map((cartItem: any) => {
+                        return (
+                          <TableRow
+                          key={cartItem.id}
+                            sx={{
+                              "td, th": { border: 0 },
+                            }}
+                          >
+                            <TableCell align="left" className="text-base">
+                              {cartItem.productName}
+                            </TableCell>
+                            <TableCell align="left" className="text-base">
+                              {cartItem.quantity}
+                            </TableCell>
+                            <TableCell align="left" className="text-base">
+                            ${Math.round(cartItem.productPrice * cartItem.quantity * 100) /
+                          100}
+                            </TableCell>
+                          </TableRow>
+                        );
+                      })}
+                      {/* <TableRow
                         sx={{
                           "td, th": { border: 0 },
                         }}
@@ -345,22 +372,7 @@ const CheckoutDialogue = (cart: any) => {
                         <TableCell align="left" className="text-base">
                           1200
                         </TableCell>
-                      </TableRow>
-                      <TableRow
-                        sx={{
-                          "td, th": { border: 0 },
-                        }}
-                      >
-                        <TableCell align="left" className="text-base">
-                          Vodka
-                        </TableCell>
-                        <TableCell align="left" className="text-base">
-                          2
-                        </TableCell>
-                        <TableCell align="left" className="text-base">
-                          1200
-                        </TableCell>
-                      </TableRow>
+                      </TableRow> */}
                     </TableBody>
                   </Table>
                 </TableContainer>
