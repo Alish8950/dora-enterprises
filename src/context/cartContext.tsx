@@ -21,6 +21,7 @@ export interface Cart {
   productPrice: number;
   quantity: number;
   productImage: string;
+  // stock: number;
 }
 
 export interface CartState {
@@ -32,13 +33,15 @@ export interface CartState {
     productName: string,
     productPrice: number,
     quantity: number,
-    productImage: string
+    productImage: string,
+    // stock: number
   ) => void;
   updateItemQuantity: (
     id: string,
     quantity: number,
     existingItem: Cart,
-    cartQuantity: boolean
+    cartQuantity: boolean,
+    // stock: number
   ) => void;
 }
 
@@ -77,7 +80,8 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     productNameaa: string,
     productPriceaa: number,
     quantity: number,
-    productImages: string
+    productImages: string,
+    // stock: number
   ) => {
     try {
       await fetch("http://localhost:5000/cart", {
@@ -91,6 +95,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
           productPrice: productPriceaa,
           quantity: quantity,
           productImage: productImages,
+          // stock: stock
         }),
       });
       router.push("/Cart");
@@ -103,7 +108,8 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     id: string,
     quantity: number,
     existingItem: Cart,
-    cartQuantity: boolean
+    cartQuantity: boolean,
+    // stock: number,
   ) => {
     try {
       if (existingItem && existingItem.quantity !== undefined) {
@@ -117,9 +123,9 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
             quantity: cartQuantity
               ? quantity
               : existingItem.quantity + quantity,
+              // stock: stock - existingItem.quantity
           }),
         });
-        console.log("Update done");
         router.push("/Cart");
       }
     } catch (error) {

@@ -26,15 +26,28 @@ export default function Product({
 }) {
   const { getSingleProduct, singleProduct } = useGlobalProducts();
   const { cart, addItemToCart, updateItemQuantity } = useGlobalCart();
+  // const [availStock, setAvailStock] = useState(true);
   const [quantity, setQuantity] = useState(1);
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
 
   const existingItem = cart.find((item) => item.id === params.ProductDetails);
-  console.log(existingItem, "existingItem")
 
   useEffect(() => {
     getSingleProduct(params.ProductDetails);
   }, []);
+
+  // const checkStock = () => {
+  //   if (!singleProduct?.stock) {
+  //     setAvailStock(true)
+  //   } else {
+  //     setAvailStock(false)
+  //   }
+  //   console.log(availStock)
+  // };
+
+  // useEffect(() => {
+  //   checkStock();
+  // }, [singleProduct?.stock]);
 
   useEffect(() => {
     getSingleProduct(params.ProductDetails);
@@ -58,6 +71,39 @@ export default function Product({
       setQuantity((prev) => prev - 1);
     }
   };
+  // const increaseQuantity = () => {
+  //   if (singleProduct?.stock !== undefined && quantity < singleProduct?.stock) {
+  //     setQuantity((prev) => prev + 1);
+  //   }
+  // };
+  // const decreaseQuantity = () => {
+  //   if (quantity === 1) {
+  //     return;
+  //   } else {
+  //     setQuantity((prev) => prev - 1);
+  //   }
+  // };
+
+  // const updateProductStock = async (id: string) => {
+  //   console.log(singleProduct?.stock !== undefined);
+  //   try {
+  //     if (singleProduct?.stock !== undefined) {
+  //       await fetch(`http://localhost:5000/products/${id}`, {
+  //         method: "PUT",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify({
+  //           ...singleProduct,
+  //           stock: singleProduct.stock - quantity,
+  //         }),
+  //       });
+  //       console.log("it is working");
+  //     }
+  //   } catch (error) {
+  //     console.log("can't update stock=>", error);
+  //   }
+  // };
 
   const addOrUpdate = () => {
     if (existingItem) {
@@ -74,6 +120,34 @@ export default function Product({
       }
     }
   };
+
+  // const addOrUpdate = () => {
+  //   if (existingItem) {
+  //     if (singleProduct?.stock !== undefined) {
+  //       updateItemQuantity(
+  //         existingItem.id,
+  //         quantity,
+  //         existingItem,
+  //         false,
+  //         singleProduct?.stock
+  //       );
+  //     }
+  //     updateProductStock(params.ProductDetails);
+  //   } else {
+  //     if (singleProduct?.productName !== undefined) {
+  //       console.log("lajkdfhjka");
+  //       addItemToCart(
+  //         params.ProductDetails,
+  //         singleProduct?.productName,
+  //         singleProduct?.productPrice,
+  //         quantity,
+  //         "testImage",
+  //         singleProduct?.stock
+  //       );
+  //       updateProductStock(params.ProductDetails);
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -107,7 +181,7 @@ export default function Product({
                   <Box className="flex items-center border border-primary justify-between w-[65px]">
                     <RemoveIcon
                       className={`text-xl cursor-pointer ${
-                        quantity ? "text-primary" : "text-grey-[200]"
+                        quantity - 1 ? "text-primary" : "text-grey-[200]"
                       }`}
                       onClick={() => decreaseQuantity()}
                     />
@@ -174,6 +248,7 @@ export default function Product({
                 </Box>
                 <Button
                   className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case w-full"
+                  // disabled={!singleProduct?.stock ? true : false}
                   onClick={addOrUpdate}
                   startIcon={
                     <ShoppingCartOutlinedIcon className="text-white" />

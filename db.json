@@ -8,7 +8,8 @@
       "productImage": "https://dummyimage.com/300x200/663399/ffffff",
       "quantity": "750ml",
       "alcoholPercentage": 40,
-      "alcoholDescription": "Smooth finish, aged in oak barrels."
+      "alcoholDescription": "Smooth finish, aged in oak barrels.",
+      "stock": 5
     },
     {
       "id": 2,
@@ -18,7 +19,8 @@
       "productImage": "https://dummyimage.com/300x200/336699/ffffff",
       "quantity": "1L",
       "alcoholPercentage": 37.5,
-      "alcoholDescription": "Triple distilled, ultra-pure vodka."
+      "alcoholDescription": "Triple distilled, ultra-pure vodka.",
+      "stock": 7
     },
     {
       "id": 3,
@@ -28,7 +30,8 @@
       "productImage": "https://dummyimage.com/300x200/996633/ffffff",
       "quantity": "700ml",
       "alcoholPercentage": 45,
-      "alcoholDescription": "Rich flavor, distilled from molasses."
+      "alcoholDescription": "Rich flavor, distilled from molasses.",
+      "stock": 9
     },
     {
       "id": 4,
@@ -38,7 +41,8 @@
       "productImage": "https://dummyimage.com/300x200/ff9900/ffffff",
       "quantity": "500ml",
       "alcoholPercentage": 42,
-      "alcoholDescription": "Botanical infusion, citrus notes."
+      "alcoholDescription": "Botanical infusion, citrus notes.",
+      "stock": 0
     },
     {
       "id": 5,
@@ -48,7 +52,8 @@
       "productImage": "https://dummyimage.com/300x200/cc0000/ffffff",
       "quantity": "750ml",
       "alcoholPercentage": 38,
-      "alcoholDescription": "Gold tequila, smooth taste, agave distillation."
+      "alcoholDescription": "Gold tequila, smooth taste, agave distillation.",
+      "stock": 4
     },
     {
       "id": 6,
@@ -58,7 +63,8 @@
       "productImage": "https://dummyimage.com/300x200/669900/ffffff",
       "quantity": "700ml",
       "alcoholPercentage": 40,
-      "alcoholDescription": "Select brandy, aged grape distillate, complex flavors."
+      "alcoholDescription": "Select brandy, aged grape distillate, complex flavors.",
+      "stock": 3
     },
     {
       "id": 7,
@@ -68,7 +74,8 @@
       "productImage": "https://dummyimage.com/300x200/993366/ffffff",
       "quantity": "750ml",
       "alcoholPercentage": 13.5,
-      "alcoholDescription": "Reserve red wine blend, cellar-aged."
+      "alcoholDescription": "Reserve red wine blend, cellar-aged.",
+      "stock": 6
     },
     {
       "id": 8,
@@ -78,7 +85,8 @@
       "productImage": "https://dummyimage.com/300x200/ffcc00/ffffff",
       "quantity": "750ml",
       "alcoholPercentage": 12,
-      "alcoholDescription": "Bubbly champagne, fine sparkling for celebrations."
+      "alcoholDescription": "Bubbly champagne, fine sparkling for celebrations.",
+      "stock": 2
     }
   ],
   "testimonials": [
@@ -155,10 +163,17 @@
   ],
   "cart": [
     {
+      "id": "4",
+      "productImage": "testImage",
+      "productName": "Gin Elegance",
+      "productPrice": 34.99,
+      "quantity": 14
+    },
+    {
       "id": "1",
       "productName": "Whiskey Deluxe",
       "productPrice": 49.99,
-      "quantity": 2,
+      "quantity": 1,
       "productImage": "testImage"
     }
   ]

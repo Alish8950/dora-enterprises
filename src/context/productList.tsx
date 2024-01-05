@@ -21,6 +21,7 @@ export interface Product {
   quantity: string;
   alcoholPercentage: number;
   alcoholDescription: string;
+  stock: number;
 }
 
 export interface ProductState {

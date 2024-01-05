@@ -13,13 +13,39 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
+import { useGlobalProducts } from "@/context/productList";
 
 export default function Cart() {
   const { cart, updateItemQuantity } = useGlobalCart();
+  // const { products } = useGlobalProducts();
   const [quantitys, setQuantity] = useState<number[]>([]);
+  // const [stockValue, setStockValue] = useState<number[]>([]);
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
+
+  // const cartDictionary = cart.reduce((acc: any, item) => {
+  //   acc[item.id] = item;
+  //   return acc;
+  // }, {});
+
+  // // Map over products and merge with cart data
+
+  // useEffect(() => {
+  //   const cartDetails = products
+  //     .map((product) => {
+  //       // Check if the product is in the cart
+  //       if (cartDictionary[product.id]) {
+  //         return { ...product, quantity: cartDictionary[product.id].quantity };
+  //       }
+  //       return null; // or return null/undefined if you don't want products not in the cart
+  //     })
+  //     .filter((item) => item !== null);
+
+  //   const newStockValue = cartDetails.map((item) => item?.stock ?? 0);
+  //   setStockValue(newStockValue)
+  //   console.log(newStockValue, "carr");
+  // }, [cart, products]);
 
   useEffect(() => {
     // Create an array of quantities from the cart items
@@ -37,6 +63,7 @@ export default function Cart() {
     productName: string,
     productPrice: number,
     quantity: number
+    // stock: number
   ) => {
     const existingItem = {
       id,
@@ -44,7 +71,9 @@ export default function Cart() {
       productName,
       productPrice,
       quantity
+      // stock,
     };
+    console.log(existingItem, "existingItemexistingItem");
     setQuantity(
       quantitys.map((qty, i) => {
         if (i === index) {
@@ -54,6 +83,24 @@ export default function Cart() {
       })
     );
     updateItemQuantity(id, quantitys[index] + 1, existingItem, true);
+    // setQuantity(
+    //   quantitys.map((qty, i) => {
+    //     if (i === index && qty < qty + stockValue[index]) {
+    //       stockValue[index]--;
+    //       return qty + 1;
+    //     }
+    //     return qty;
+    //   })
+    // );
+    // if (existingItem.stock !== undefined) {
+    //   updateItemQuantity(
+    //     id,
+    //     quantitys[index] + 1,
+    //     existingItem,
+    //     true,
+    //     existingItem.stock
+    //   );
+    // }
   };
   // Function to decrease quantity
   const decreaseQuantity = (
@@ -62,14 +109,16 @@ export default function Cart() {
     productImage: string,
     productName: string,
     productPrice: number,
-    quantity: number
+    quantity: number,
+    // stock: number
   ) => {
     const existingItem = {
       id,
       productImage,
       productName,
       productPrice,
-      quantity
+      quantity,
+      // stock,
     };
     setQuantity(
       quantitys.map((qty, i) => {
@@ -81,6 +130,25 @@ export default function Cart() {
       })
     );
     updateItemQuantity(id, quantitys[index] - 1, existingItem, true);
+    // setQuantity(
+    //   quantitys.map((qty, i) => {
+    //     if (i === index && qty > 1) {
+    //       stockValue[index]++;
+    //       // Prevents quantity from going below 1
+    //        return qty - 1;
+    //     }
+    //     return qty;
+    //   })
+    // );
+    // if (existingItem.stock !== undefined) {
+    //   updateItemQuantity(
+    //     id,
+    //     quantitys[index] - 1,
+    //     existingItem,
+    //     true,
+    //     existingItem.stock
+    //   );
+    // }
   };
   return (
     <>
@@ -142,6 +210,7 @@ export default function Cart() {
                                 cart.productName,
                                 cart.productPrice,
                                 quantitys[index]
+                                // cart.stock
                               )
                             }
                             // onClick={() => updateQuantity(cart.id, false)}
@@ -157,6 +226,7 @@ export default function Cart() {
                                 cart.productName,
                                 cart.productPrice,
                                 quantitys[index]
+                                // cart.stock
                               )
                             }
                             // onClick={() => updateQuantity(cart.id, true)}
@@ -167,6 +237,9 @@ export default function Cart() {
                         $
                         {Math.round(cart.productPrice * quantitys[index] * 100) /
                           100}
+                        {/* {Math.round(
+                          cart.productPrice * quantitys[index] * 100
+                        ) / 100} */}
                       </TableCell>
                     </TableRow>
                   );
