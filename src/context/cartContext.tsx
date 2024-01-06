@@ -28,6 +28,9 @@ export interface CartState {
   isError: boolean;
   cart: Cart[];
   totalCartQuantity: number;
+  quantitys: any;
+  setQuantity: (quant: number[]) => void;
+  getCart: () => void;
   calculateTotalQuantity: () => void;
   addItemToCart: (
     params: string,
@@ -49,7 +52,10 @@ const initialState: CartState = {
   isError: false,
   cart: [],
   totalCartQuantity: 0,
-  calculateTotalQuantity: () => {return 1},
+  quantitys: 0,
+  setQuantity: () => {},
+  getCart: () => {},
+  calculateTotalQuantity: () => {},
   addItemToCart: () => {},
   updateItemQuantity: () => {},
 };
@@ -62,13 +68,14 @@ const API_URL = "http://localhost:5000/cart";
 const CartProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [totalCartQuantity, setTotalCartQuantity] = useState(0)
+  const [quantitys, setQuantity] = useState<number[]>([]);
   const router = useRouter();
 
   // get cart items
-  const getCart = async (url: string) => {
+  const getCart = async () => {
     dispatch({ type: "SET_LOADING" });
     try {
-      const res = await fetch(url);
+      const res = await fetch("http://localhost:5000/cart");
       const data = await res.json();
       dispatch({ type: "MY_API_DATA", payload: data });
     } catch (error) {
@@ -139,12 +146,12 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
 
 
   useEffect(() => {
-    getCart(API_URL);
+    getCart();
   }, []);
 
   return (
     <CartContext.Provider
-      value={{ ...state, addItemToCart, updateItemQuantity, calculateTotalQuantity, totalCartQuantity }}
+      value={{ ...state, addItemToCart, updateItemQuantity, calculateTotalQuantity, totalCartQuantity, getCart, setQuantity, quantitys }}
     >
       {children}
     </CartContext.Provider>

@@ -13,12 +13,12 @@ import RemoveIcon from "@mui/icons-material/Remove";
 import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
-import {Cart as CartInterface} from '../../../context/cartContext'
+import { Cart as CartInterface } from "../../../context/cartContext";
 
 export default function Cart() {
-  const { cart, updateItemQuantity } = useGlobalCart();
-  const [quantitys, setQuantity] = useState<number[]>([]);
-  const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([])
+  const { cart, updateItemQuantity, getCart, setQuantity, quantitys } = useGlobalCart();
+  // const [quantitys, setQuantity] = useState<number[]>([]);
+  const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([]);
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
@@ -32,6 +32,9 @@ export default function Cart() {
     // Update the vals state
     setQuantity(quantities);
   }, [cart]);
+  useEffect(() => {
+    // getCart();
+  }, []);
 
   // Function to increase quantity
   const increaseQuantity = (
@@ -47,10 +50,10 @@ export default function Cart() {
       productImage,
       productName,
       productPrice,
-      quantity
+      quantity,
     };
     setQuantity(
-      quantitys.map((qty, i) => {
+      quantitys.map((qty: any, i: any) => {
         if (i === index) {
           return qty + 1;
         }
@@ -58,6 +61,7 @@ export default function Cart() {
       })
     );
     updateItemQuantity(id, quantitys[index] + 1, existingItem, true);
+    // getCart()
   };
   // Function to decrease quantity
   const decreaseQuantity = (
@@ -73,18 +77,20 @@ export default function Cart() {
       productImage,
       productName,
       productPrice,
-      quantity
+      quantity,
     };
-    setQuantity(
-      quantitys.map((qty, i) => {
-        if (i === index && qty > 1) {
-          // Prevents quantity from going below 1
-          return qty - 1;
-        }
-        return qty;
-      })
-    );
-    updateItemQuantity(id, quantitys[index] - 1, existingItem, true);
+    if (quantitys[index]-1) {
+      setQuantity(
+        quantitys.map((qty: any, i: any) => {
+          if (i === index && qty > 1) {
+            // Prevents quantity from going below 1
+            return qty - 1;
+          }
+          return qty;
+        })
+      );
+      updateItemQuantity(id, quantitys[index] - 1, existingItem, true);
+    }
   };
 
   const handleDelete = async (id: string) => {
@@ -104,27 +110,30 @@ export default function Cart() {
 
   async function deleteAllItems(): Promise<void> {
     try {
-        // Step 1: Fetch the list of items
-        const response = await fetch('http://localhost:5000/cart');
-        const items: CartInterface[] = await response.json();
+      // Step 1: Fetch the list of items
+      const response = await fetch("http://localhost:5000/cart");
+      const items: CartInterface[] = await response.json();
 
-        // Step 2: Iterate through the items and delete them
-        for (const item of items) {
-            const deleteResponse = await fetch(`http://localhost:5000/cart/${item.id}`, {
-                method: 'DELETE'
-            });
+      // Step 2: Iterate through the items and delete them
+      for (const item of items) {
+        const deleteResponse = await fetch(
+          `http://localhost:5000/cart/${item.id}`,
+          {
+            method: "DELETE",
+          }
+        );
 
-            if (!deleteResponse.ok) {
-                throw new Error(`Failed to delete item with ID ${item.id}`);
-            }
-
-            console.log(`Item with ID ${item.id} deleted.`);
+        if (!deleteResponse.ok) {
+          throw new Error(`Failed to delete item with ID ${item.id}`);
         }
-        setUpdatedCart([])
+
+        console.log(`Item with ID ${item.id} deleted.`);
+      }
+      setUpdatedCart([]);
     } catch (error) {
-        console.error('Error:', error);
+      console.error("Error:", error);
     }
-}
+  }
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
@@ -160,7 +169,10 @@ export default function Cart() {
                             <Typography className="text-[26px] text-secondary mb-5 font-medium">
                               {cart.productName}
                             </Typography>
-                            <Link className="text-lg cursor-pointer" onClick={() => handleDelete(cart.id)}>
+                            <Link
+                              className="text-lg cursor-pointer"
+                              onClick={() => handleDelete(cart.id)}
+                            >
                               Remove
                             </Link>
                           </Box>
@@ -208,8 +220,9 @@ export default function Cart() {
                       </TableCell>
                       <TableCell align="left" className="text-lg font-medium">
                         $
-                        {Math.round(cart.productPrice * quantitys[index] * 100) /
-                          100}
+                        {Math.round(
+                          cart.productPrice * quantitys[index] * 100
+                        ) / 100}
                       </TableCell>
                     </TableRow>
                   );
@@ -218,7 +231,9 @@ export default function Cart() {
             </Table>
           </TableContainer>
           <Box className="w-full flex items-end justify-end">
-            <Link className="cursor-pointer" onClick={deleteAllItems}>Clear Cart</Link>
+            <Link className="cursor-pointer" onClick={deleteAllItems}>
+              Clear Cart
+            </Link>
           </Box>
           <Box className="text-right mt-7">
             <Typography className="text-xl text-secondary font-medium">

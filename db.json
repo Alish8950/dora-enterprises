@@ -159,21 +159,14 @@
       "productImage": "testImage",
       "productName": "Brandy Select",
       "productPrice": 54.99,
-      "quantity": 3
+      "quantity": 4
     },
     {
       "id": "4",
       "productImage": "testImage",
       "productName": "Gin Elegance",
       "productPrice": 34.99,
-      "quantity": 1
-    },
-    {
-      "id": "8",
-      "productName": "Champagne Celebration",
-      "productPrice": 69.99,
-      "quantity": 3,
-      "productImage": "testImage"
+      "quantity": 6
     }
   ]
 }
