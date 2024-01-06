@@ -18,8 +18,8 @@ const ITEM_HEIGHT = 48;
 
 const Header = () => {
   const router = useRouter();
-  const { cart, calculateTotalQuantity, totalCartQuantity } = useGlobalCart();
-  const [totalQuantity, setTotalQuantity] = useState(0)
+  const { cart, getCart, quantitys } = useGlobalCart();
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,10 +28,15 @@ const Header = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   useEffect(() => {
-    // const totalQuantitys = calculateTotalQuantity();
-    setTotalQuantity(totalCartQuantity)
+    getCart();
+  },[quantitys]);
+  useEffect(() => {
+    let totalQuantity = cart.reduce(
+      (accumulator, item) => accumulator + item.quantity,
+      0
+    );
+    setTotalQuantity(totalQuantity);
   }, [cart]);
   return (
     <>
@@ -104,7 +109,13 @@ const Header = () => {
                 className="cursor-pointer"
                 onClick={() => router.push("/Cart")}
               />
-              <Box className="absolute top-0">{totalQuantity}</Box>
+              {totalQuantity ? (
+                <Box className="absolute top-0 bg-primary text-white flex items-center justify-center top-[-7px] right-[-6px] w-4 h-4 min-w-4 rounded-full text-[10px]">
+                  {totalQuantity}
+                </Box>
+              ) : (
+                ""
+              )}
             </Box>
           </Box>
         </Box>

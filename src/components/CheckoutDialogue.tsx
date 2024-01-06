@@ -45,7 +45,6 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
-  console.log(cart)
   // Dialogue Box State
   const [open, setOpen] = useState(false);
   // Custom Stepper State
