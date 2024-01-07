@@ -30,7 +30,6 @@ export default function Product({
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
 
   const existingItem = cart.find((item) => item.id === params.ProductDetails);
-  console.log(existingItem, "existingItem")
 
   useEffect(() => {
     getSingleProduct(params.ProductDetails);

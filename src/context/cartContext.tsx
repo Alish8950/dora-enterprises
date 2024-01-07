@@ -29,7 +29,10 @@ export interface CartState {
   cart: Cart[];
   totalCartQuantity: number;
   quantitys: any;
+  updatedCart: any;
+  deleteAllItems: () => void;
   setQuantity: (quant: number[]) => void;
+  setUpdatedCart: (ele: any) => void;
   getCart: () => void;
   calculateTotalQuantity: () => void;
   addItemToCart: (
@@ -53,7 +56,10 @@ const initialState: CartState = {
   cart: [],
   totalCartQuantity: 0,
   quantitys: 0,
+  updatedCart: [],
+  deleteAllItems: () => {},
   setQuantity: () => {},
+  setUpdatedCart:() => {},
   getCart: () => {},
   calculateTotalQuantity: () => {},
   addItemToCart: () => {},
@@ -69,6 +75,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [totalCartQuantity, setTotalCartQuantity] = useState(0)
   const [quantitys, setQuantity] = useState<number[]>([]);
+  const [updatedCart, setUpdatedCart] = useState<Cart[]>([]);
   const router = useRouter();
 
   // get cart items
@@ -131,7 +138,6 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
               : existingItem.quantity + quantity,
           }),
         });
-        console.log("Update done");
         router.push("/Cart");
       }
     } catch (error) {
@@ -143,7 +149,33 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     setTotalCartQuantity(state.cart.reduce((total, item) => total + item.quantity, 0))
   };
 
+// delete all items to cart
+  async function deleteAllItems(): Promise<void> {
+  try {
+    // Step 1: Fetch the list of items
+    const response = await fetch("http://localhost:5000/cart");
+    const items: Cart[] = await response.json();
 
+    // Step 2: Iterate through the items and delete them
+    for (const item of items) {
+      const deleteResponse = await fetch(
+        `http://localhost:5000/cart/${item.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!deleteResponse.ok) {
+        throw new Error(`Failed to delete item with ID ${item.id}`);
+      }
+
+      console.log(`Item with ID ${item.id} deleted.`);
+    }
+    setUpdatedCart([]);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
 
   useEffect(() => {
     getCart();
@@ -151,7 +183,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
 
   return (
     <CartContext.Provider
-      value={{ ...state, addItemToCart, updateItemQuantity, calculateTotalQuantity, totalCartQuantity, getCart, setQuantity, quantitys }}
+      value={{ ...state, addItemToCart, updateItemQuantity, calculateTotalQuantity, totalCartQuantity, getCart, setQuantity, quantitys, deleteAllItems, setUpdatedCart, updatedCart }}
     >
       {children}
     </CartContext.Provider>
