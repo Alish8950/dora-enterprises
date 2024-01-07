@@ -15,10 +15,12 @@ import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
 import { Cart as CartInterface } from "../../../context/cartContext";
 
+
+
 export default function Cart() {
-  const { cart, updateItemQuantity, getCart, setQuantity, quantitys } = useGlobalCart();
+  const { cart, updateItemQuantity, getCart, setQuantity, quantitys, deleteAllItems, updatedCart, setUpdatedCart } = useGlobalCart();
+  // const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([]);
   // const [quantitys, setQuantity] = useState<number[]>([]);
-  const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([]);
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
@@ -102,38 +104,13 @@ export default function Cart() {
         },
       });
 
-      setUpdatedCart((prevData) => prevData.filter((item) => item.id !== id));
+      setUpdatedCart((prevData: any) => prevData.filter((item: any) => item.id !== id));
     } catch (error) {
       console.log("Cannot Delete => ", error);
     }
   };
 
-  async function deleteAllItems(): Promise<void> {
-    try {
-      // Step 1: Fetch the list of items
-      const response = await fetch("http://localhost:5000/cart");
-      const items: CartInterface[] = await response.json();
-
-      // Step 2: Iterate through the items and delete them
-      for (const item of items) {
-        const deleteResponse = await fetch(
-          `http://localhost:5000/cart/${item.id}`,
-          {
-            method: "DELETE",
-          }
-        );
-
-        if (!deleteResponse.ok) {
-          throw new Error(`Failed to delete item with ID ${item.id}`);
-        }
-
-        console.log(`Item with ID ${item.id} deleted.`);
-      }
-      setUpdatedCart([]);
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  }
+ 
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
@@ -157,7 +134,7 @@ export default function Cart() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {updatedCart.map((cart, index) => {
+                {updatedCart.map((cart: any, index: number) => {
                   return (
                     <TableRow key={cart.id}>
                       <TableCell component="th" scope="row">

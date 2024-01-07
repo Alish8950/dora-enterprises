@@ -153,20 +153,6 @@
       "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
     }
   ],
-  "cart": [
-    {
-      "id": "6",
-      "productImage": "testImage",
-      "productName": "Brandy Select",
-      "productPrice": 54.99,
-      "quantity": 4
-    },
-    {
-      "id": "4",
-      "productImage": "testImage",
-      "productName": "Gin Elegance",
-      "productPrice": 34.99,
-      "quantity": 6
-    }
-  ]
+  "cart": [],
+  "address": []
 }

@@ -29,7 +29,7 @@ const Header = () => {
     setAnchorEl(null);
   };
   useEffect(() => {
-    getCart();
+    // getCart();
   },[quantitys]);
   useEffect(() => {
     let totalQuantity = cart.reduce(
