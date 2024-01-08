@@ -33,6 +33,8 @@ import Image from "next/image";
 import { Cart, useGlobalCart } from "@/context/cartContext";
 import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
+import { useGlobalAddress } from "@/context/addressContext";
+import { ShippingAddress } from "@/context/addressContext";
 
 interface StateModel {
   name: string;
@@ -45,28 +47,17 @@ interface CountryStateModel {
   states: StateModel[];
 }
 
-interface ShippingAddress {
-  email: string;
-  firstName: string;
-  lastName: string;
-  contactNumber: number;
-  address: string;
-  pincode: number;
-  country: string;
-  state: string;
-  city: string;
-}
 // Define the initial state outside of the component
 const initialShippingAddress: ShippingAddress = {
-  email: '',
-  firstName: '',
-  lastName: '',
-  contactNumber: '' as any,
-  address: '',
-  pincode: '' as any,
-  country: '',
-  state: '',
-  city: ''
+  email: "",
+  firstName: "",
+  lastName: "",
+  contactNumber: "" as any,
+  address: "",
+  pincode: "" as any,
+  country: "",
+  state: "",
+  city: "",
 };
 
 interface ChildComponentProps {
@@ -83,9 +74,13 @@ const Transition = React.forwardRef(function Transition(
 });
 
 const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
-  const {deleteAllItems} = useGlobalCart()
-  const router = useRouter()
-  const [saveAddress, setSaveAddress] = useState<ShippingAddress>(initialShippingAddress)
+  const [check, setCheck] = useState(false);
+  const { updateAddressList } = useGlobalAddress();
+  const { deleteAllItems } = useGlobalCart();
+  const router = useRouter();
+  const [saveAddress, setSaveAddress] = useState<ShippingAddress>(
+    initialShippingAddress
+  );
   const [countryStateArr, setCountryStateArr] = useState<
     Array<CountryStateModel>
   >([]);
@@ -100,11 +95,12 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
     trigger,
     formState: { errors, isValid },
   } = useForm<ShippingAddress>({
-    defaultValues: initialShippingAddress
+    defaultValues: initialShippingAddress,
   });
   const onSubmit: SubmitHandler<ShippingAddress> = (data) => {
     setSaveAddress(data);
-    handleNextStep()
+    if (check) updateAddressList(data);
+    handleNextStep();
   };
 
   // console.log(watch(123)) // watch input value by passing the name of it
@@ -166,8 +162,8 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
 
   const placeOrder = () => {
     deleteAllItems();
-    router.push("/Home")
-  }
+    router.push("/Home");
+  };
 
   return (
     <>
@@ -521,7 +517,10 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                           </Box>
                         </Box>
                         <Box className="flex items-center gap-2 mt-2">
-                          <Checkbox className="p-0" />
+                          <Checkbox
+                            onChange={(e) => setCheck(e.target.checked)}
+                            className="p-0"
+                          />
                           <Typography className="text-secondary text-sm">
                             Save this informations for a future fast checkout
                           </Typography>
@@ -551,7 +550,8 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                                 Ship to
                               </Typography>
                               <Typography className="text-sm text-secondary">
-                                {saveAddress.address}, {saveAddress.city}, {saveAddress.state}, {saveAddress.pincode}
+                                {saveAddress.address}, {saveAddress.city},{" "}
+                                {saveAddress.state}, {saveAddress.pincode}
                               </Typography>
                             </Box>
                             <Link href="#" className="text-sm no-underline">
@@ -613,10 +613,12 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                         Go to Shipping
                       </Button>
                     )}
-                     {stepper === 3 && (
+                    {stepper === 3 && (
                       <Button
                         className="bg-primary text-white font-normal text-xl h-10 hover:bg-primary px-11 normal-case whitespace-nowrap"
-                        onClick={() => {placeOrder()}}
+                        onClick={() => {
+                          placeOrder();
+                        }}
                       >
                         Place Order
                       </Button>

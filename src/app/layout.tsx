@@ -6,6 +6,7 @@ import { ThemeProvider } from "@mui/material";
 import { AppProvider } from "@/context/productList";
 import { TestimonialsProvider } from "@/context/testimonialsContext";
 import { CartProvider } from "@/context/cartContext";
+import {  AddressProvider } from "@/context/addressContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body>
         <AppProvider>
           <CartProvider>
-            <TestimonialsProvider>{children}</TestimonialsProvider>
+            <AddressProvider>
+              <TestimonialsProvider>{children}</TestimonialsProvider>
+            </AddressProvider>
           </CartProvider>
         </AppProvider>
       </body>
