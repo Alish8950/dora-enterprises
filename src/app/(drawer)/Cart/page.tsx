@@ -35,7 +35,7 @@ export default function Cart() {
     setQuantity(quantities);
   }, [cart]);
   useEffect(() => {
-    // getCart();
+    getCart();
   }, []);
 
   // Function to increase quantity

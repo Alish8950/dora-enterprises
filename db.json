@@ -153,6 +153,63 @@
       "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
     }
   ],
-  "cart": [],
-  "address": []
+  "cart": [
+    {
+      "id": "4",
+      "productName": "Gin Elegance",
+      "productPrice": 34.99,
+      "quantity": 1,
+      "productImage": "testImage"
+    }
+  ],
+  "address": [
+    {
+      "email": "alishallawadhi5@gmail.com",
+      "firstName": "Alish",
+      "lastName": "Allawadhi",
+      "contactNumber": "09729825030",
+      "address": "802",
+      "pincode": "125001",
+      "country": "Australia",
+      "state": "New South Wales",
+      "city": "Hisar",
+      "id": 1
+    },
+    {
+      "email": "alishallawadhi5@gmail.com",
+      "firstName": "Alish",
+      "lastName": "Allawadhi",
+      "contactNumber": "09729825030",
+      "address": "802",
+      "pincode": "125001",
+      "country": "Austria",
+      "state": "Carinthia",
+      "city": "Hisar",
+      "id": 2
+    },
+    {
+      "email": "alishallawadhi5@gmail.com",
+      "firstName": "Alish",
+      "lastName": "Allawadhi",
+      "contactNumber": "09729825030",
+      "address": "802",
+      "pincode": "125001",
+      "country": "Austria",
+      "state": "Carinthia",
+      "city": "Hisar",
+      "id": 3
+    },
+    {
+      "email": "alishallawadhi5@gmail.com",
+      "firstName": "Alish",
+      "lastName": "Allawadhi",
+      "contactNumber": "09729825030",
+      "address": "802",
+      "pincode": "125001",
+      "country": "Austria",
+      "state": "Carinthia",
+      "city": "Hisar",
+      "id": 4
+    }
+  ]
 }
