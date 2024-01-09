@@ -158,58 +158,18 @@
       "id": "4",
       "productName": "Gin Elegance",
       "productPrice": 34.99,
-      "quantity": 1,
+      "quantity": 2,
       "productImage": "testImage"
+    },
+    {
+      "id": "8",
+      "productImage": "testImage",
+      "productName": "Champagne Celebration",
+      "productPrice": 69.99,
+      "quantity": 2
     }
   ],
   "address": [
-    {
-      "email": "alishallawadhi5@gmail.com",
-      "firstName": "Alish",
-      "lastName": "Allawadhi",
-      "contactNumber": "09729825030",
-      "address": "802",
-      "pincode": "125001",
-      "country": "Australia",
-      "state": "New South Wales",
-      "city": "Hisar",
-      "id": 1
-    },
-    {
-      "email": "alishallawadhi5@gmail.com",
-      "firstName": "Alish",
-      "lastName": "Allawadhi",
-      "contactNumber": "09729825030",
-      "address": "802",
-      "pincode": "125001",
-      "country": "Austria",
-      "state": "Carinthia",
-      "city": "Hisar",
-      "id": 2
-    },
-    {
-      "email": "alishallawadhi5@gmail.com",
-      "firstName": "Alish",
-      "lastName": "Allawadhi",
-      "contactNumber": "09729825030",
-      "address": "802",
-      "pincode": "125001",
-      "country": "Austria",
-      "state": "Carinthia",
-      "city": "Hisar",
-      "id": 3
-    },
-    {
-      "email": "alishallawadhi5@gmail.com",
-      "firstName": "Alish",
-      "lastName": "Allawadhi",
-      "contactNumber": "09729825030",
-      "address": "802",
-      "pincode": "125001",
-      "country": "Austria",
-      "state": "Carinthia",
-      "city": "Hisar",
-      "id": 4
-    }
+    
   ]
 }
