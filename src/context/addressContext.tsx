@@ -16,6 +16,7 @@ interface AppContextProps {
   children: ReactNode;
 }
 export interface ShippingAddress {
+  id: string;
   address: string;
   city: string;
   contactNumber: number;
@@ -42,10 +43,7 @@ const initialState: AddressState = {
   updateAddressList: () => {},
 };
 
-// interface CartContextType extends CartState {}
-
 const AddressContext = createContext<AddressState | undefined>(undefined);
-const API_URL = "http://localhost:5000/cart";
 
 const AddressProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -55,7 +53,6 @@ const AddressProvider: FC<AppContextProps> = ({ children }) => {
     try {
       const res = await fetch("http://localhost:5000/address");
       const data = await res.json();
-      console.log(data);
       dispatch({ type: "MY_API_DATA", payload: data });
     } catch (error) {
       dispatch({ type: "API_ERROR" });

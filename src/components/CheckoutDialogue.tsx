@@ -49,6 +49,7 @@ interface CountryStateModel {
 
 // Define the initial state outside of the component
 const initialShippingAddress: ShippingAddress = {
+  id: "",
   email: "",
   firstName: "",
   lastName: "",
@@ -62,6 +63,7 @@ const initialShippingAddress: ShippingAddress = {
 
 interface ChildComponentProps {
   cart: Cart[];
+  totalPrice: number;
 }
 
 const Transition = React.forwardRef(function Transition(
@@ -73,7 +75,10 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
+const CheckoutDialogue: React.FC<ChildComponentProps> = ({
+  cart,
+  totalPrice,
+}) => {
   const [check, setCheck] = useState(false);
   const { updateAddressList } = useGlobalAddress();
   const { deleteAllItems } = useGlobalCart();
@@ -98,8 +103,12 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
     defaultValues: initialShippingAddress,
   });
   const onSubmit: SubmitHandler<ShippingAddress> = (data) => {
+    const updatedData = {
+      ...data,
+      id: Math.random().toString(36).slice(2, 11),
+    };
     setSaveAddress(data);
-    if (check) updateAddressList(data);
+    if (check) updateAddressList(updatedData);
     handleNextStep();
   };
 
@@ -516,7 +525,7 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                             />
                           </Box>
                         </Box>
-                        <Box className="flex items-center gap-2 mt-2">
+                        {/* <Box className="flex items-center gap-2 mt-2">
                           <Checkbox
                             onChange={(e) => setCheck(e.target.checked)}
                             className="p-0"
@@ -524,7 +533,7 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                           <Typography className="text-secondary text-sm">
                             Save this informations for a future fast checkout
                           </Typography>
-                        </Box>
+                        </Box> */}
                       </>
                     )}
                     {stepper == 3 && (
@@ -539,7 +548,10 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                                 {saveAddress.email}
                               </Typography>
                             </Box>
-                            <Link href="#" className="text-sm no-underline">
+                            <Link
+                              onClick={handlePrevStep}
+                              className="text-sm no-underline cursor-pointer"
+                            >
                               Edit
                             </Link>
                           </Box>
@@ -554,7 +566,10 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                                 {saveAddress.state}, {saveAddress.pincode}
                               </Typography>
                             </Box>
-                            <Link href="#" className="text-sm no-underline">
+                            <Link
+                              onClick={handlePrevStep}
+                              className="text-sm no-underline cursor-pointer"
+                            >
                               Edit
                             </Link>
                           </Box>
@@ -583,9 +598,10 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                                   <FormControlLabel
                                     value="premium"
                                     control={<Radio />}
-                                    label="One Day Delivery"
+                                    disabled
+                                    label="One Day Delivery (comming soon)"
                                   />
-                                  <Typography>1200</Typography>
+                                  <Typography>$2.99</Typography>
                                 </Box>
                               </RadioGroup>
                             </FormControl>
@@ -616,11 +632,12 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                     {stepper === 3 && (
                       <Button
                         className="bg-primary text-white font-normal text-xl h-10 hover:bg-primary px-11 normal-case whitespace-nowrap"
-                        onClick={() => {
-                          placeOrder();
-                        }}
+                        // onClick={() => {
+                        //   placeOrder();
+                        // }}
+                        onClick={handleNextStep}
                       >
-                        Place Order
+                        Go to payment
                       </Button>
                     )}
                     {/* <Button
@@ -714,7 +731,7 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                         Subtotal
                       </Typography>
                       <Typography className="text-sm font-medium text-secondary">
-                        $9.99
+                        ${Math.round(totalPrice * 100) / 100}
                       </Typography>
                     </Box>
                     <Box className="flex items-center justify-between mt-3">
@@ -732,7 +749,7 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({ cart }) => {
                       Total
                     </Typography>
                     <Typography className="text-2xl font-medium text-secondary">
-                      $9.99
+                      ${Math.round(totalPrice * 100) / 100}
                     </Typography>
                   </Box>
                 </Box>
