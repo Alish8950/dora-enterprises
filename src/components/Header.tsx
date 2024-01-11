@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Link, Typography } from "@mui/material";
+import { Box, Button, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import EcomLogo from "../assets/images/ecom_logo.svg";
 import IconButton from "@mui/material/IconButton";
@@ -12,25 +12,49 @@ import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/navigation";
 import { useGlobalCart } from "@/context/cartContext";
+import {  signOut } from "firebase/auth";
+import { auth } from "../../firebase";
+import { useGlobalUser } from "@/context/authContext";
 
 const options = ["None", "Atria", "Callisto"];
 const ITEM_HEIGHT = 48;
 
+
 const Header = () => {
   const router = useRouter();
   const { cart, getCart, quantitys } = useGlobalCart();
+  const {userData} = useGlobalUser()
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorEl(event.currentTarget);
+  const [anchorProfile, setAnchorProfile] = React.useState<null | HTMLElement>(
+    null
+    );
+    const open = Boolean(anchorEl);
+    const openProfile = Boolean(anchorProfile);
+    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+    };
+    const handleSignOut = () => {
+      signOut(auth).then(() => {
+        handleCloseProfile()
+        router.push("/Login")
+        
+      }).catch((error: any) => {
+        console.log("cant signout ==> ", error)
+      });
+    }
+  const handleClickProfile = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorProfile(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const handleCloseProfile = () => {
+    setAnchorProfile(null);
+  };
   useEffect(() => {
     // getCart();
-  },[quantitys]);
+  }, [quantitys]);
   useEffect(() => {
     let totalQuantity = cart.reduce(
       (accumulator, item) => accumulator + item.quantity,
@@ -103,7 +127,34 @@ const Header = () => {
             </Link>
           </Box>
           <Box className="flex items-center flex-between gap-4">
-            <Person4OutlinedIcon />
+            <Box>
+              <Box className="cursor-pointer" onClick={handleClickProfile}>
+                <Person4OutlinedIcon />
+              </Box>
+              <Menu
+                id="long-menu"
+                MenuListProps={{
+                  "aria-labelledby": "long-button",
+                }}
+                anchorEl={anchorProfile}
+                open={openProfile}
+                onClose={handleClose}
+                PaperProps={{
+                  style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: "20ch",
+                  },
+                }}
+              >
+                <Box>
+                  <Typography>Name</Typography>
+                  <Typography>Email</Typography>
+                  <Button className="bg-primary text-white text-sm font-medium h-7 hover:bg-primary px-4 normal-case" onClick={() => handleSignOut()}>
+                    Signout
+                  </Button>
+                </Box>
+              </Menu>
+            </Box>
             <Box className="relative">
               <ShoppingCartOutlinedIcon
                 className="cursor-pointer"

@@ -14,7 +14,7 @@ const firebaseConfig = {
   const provider = new GoogleAuthProvider();
   
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
+  export const auth = getAuth(app);
 
 
   export const loginSubmit = () => {
@@ -23,6 +23,7 @@ const firebaseConfig = {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
+        console.log(token, "token")
         // The signed-in user info.
         const user = result.user;
         console.log(user)
