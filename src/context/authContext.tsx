@@ -1,7 +1,7 @@
 "use client";
 
 import reducer from "@/reducer/authReducer";
-import { GoogleAuthProvider, signInWithPopup } from "@firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@firebase/auth";
 import React, {
   FC,
   ReactNode,
@@ -12,16 +12,14 @@ import React, {
   useState,
 } from "react";
 import { auth } from "../../firebase";
-// import { User } from "@firebase/auth";
+import { User } from "@firebase/auth";
 
 const API = "http://localhost:5000/products";
 
-export interface User {
-  uid: string;
-  userName: string;
-  userEmail: string;
-  userImage: string;
-}
+// export interface User {
+//   displayName: string;
+//   email: string;
+// }
 
 export interface UserState {
   isLoading: boolean;
@@ -48,7 +46,7 @@ interface AppContextProps {
 }
 const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<User | null>(null);
   const provider = new GoogleAuthProvider();
 
   const loginSubmit = () => {
@@ -58,10 +56,8 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
-        console.log(token, "token");
         // The signed-in user info.
         const user = result.user;
-        console.log(user, "contxt");
         setUserData(user);
         dispatch({ type: "MY_API_DATA", payload: user });
         // IdP data available using getAdditionalUserInfo(result)
@@ -80,6 +76,19 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
         // ...
       });
   };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // console.log(user);
+        setUserData(user)
+        // router.push("/Home");
+        const uid = user.uid;
+      } else {
+        // router.push("/Login");
+      }
+    });
+  }, []);
   //   const getProducts = async (url: string) => {
   //     dispatch({ type: "SET_LOADING" });
   //     try {
