@@ -17,16 +17,12 @@ const Login = () => {
   const { userData, setUserData, loginSubmit } = useGlobalUser();
   const router = useRouter();
   const provider = new GoogleAuthProvider();
-  // const [userData, setUserData] = useState(null);
 
-  useEffect(() => {
-    console.log(userData);
-  }, []);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log(user);
+        // console. log(user);
         setUserData(user)
         router.push("/Home");
         const uid = user.uid;
@@ -36,9 +32,9 @@ const Login = () => {
     });
   }, []);
 
-  useEffect(() => {
-console.log(userData, "userDatauserDatauserDatauserDatauserDatauserData")
-  },[userData])
+//   useEffect(() => {
+// console.log(userData, "userDatauserDatauserDatauserDatauserDatauserData")
+//   },[userData])
 
   
   return (

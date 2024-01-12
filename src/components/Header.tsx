@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Box, Button, Link, Typography } from "@mui/material";
+import { Avatar, Box, Button, Link, Typography } from "@mui/material";
 import Image from "next/image";
 import EcomLogo from "../assets/images/ecom_logo.svg";
 import IconButton from "@mui/material/IconButton";
@@ -12,37 +12,38 @@ import Person4OutlinedIcon from "@mui/icons-material/Person4Outlined";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import { useRouter } from "next/navigation";
 import { useGlobalCart } from "@/context/cartContext";
-import {  signOut } from "firebase/auth";
+import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import { useGlobalUser } from "@/context/authContext";
 
 const options = ["None", "Atria", "Callisto"];
 const ITEM_HEIGHT = 48;
 
-
 const Header = () => {
   const router = useRouter();
   const { cart, getCart, quantitys } = useGlobalCart();
-  const {userData} = useGlobalUser()
+  const { userData, setUserData } = useGlobalUser();
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorProfile, setAnchorProfile] = React.useState<null | HTMLElement>(
     null
-    );
-    const open = Boolean(anchorEl);
-    const openProfile = Boolean(anchorProfile);
-    const handleClick = (event: React.MouseEvent<HTMLElement>) => {
-      setAnchorEl(event.currentTarget);
-    };
-    const handleSignOut = () => {
-      signOut(auth).then(() => {
-        handleCloseProfile()
-        router.push("/Login")
-        
-      }).catch((error: any) => {
-        console.log("cant signout ==> ", error)
+  );
+  const open = Boolean(anchorEl);
+  const openProfile = Boolean(anchorProfile);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleSignOut = () => {
+    signOut(auth)
+      .then(() => {
+        handleCloseProfile();
+        setUserData(null);
+        router.push("/Login");
+      })
+      .catch((error: any) => {
+        console.log("cant signout ==> ", error);
       });
-    }
+  };
   const handleClickProfile = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorProfile(event.currentTarget);
   };
@@ -129,10 +130,24 @@ const Header = () => {
           <Box className="flex items-center flex-between gap-4">
             <Box>
               <Box className="cursor-pointer" onClick={handleClickProfile}>
-                <Person4OutlinedIcon />
+                {userData?.uid ? (
+                  <Box>
+                    <Avatar
+                      className="w-6 h-6"
+                      alt={userData?.displayName}
+                      src={userData?.photoURL}
+                    />
+                  </Box>
+                ) : (
+                  <Person4OutlinedIcon />
+                )}
               </Box>
               <Menu
                 id="long-menu"
+                aria-label="more"
+                aria-controls={open ? "long-menu" : undefined}
+                aria-expanded={open ? "true" : undefined}
+                aria-haspopup="true"
                 MenuListProps={{
                   "aria-labelledby": "long-button",
                 }}
@@ -142,16 +157,42 @@ const Header = () => {
                 PaperProps={{
                   style: {
                     maxHeight: ITEM_HEIGHT * 4.5,
-                    width: "20ch",
+                    width: "26ch",
                   },
                 }}
               >
-                <Box>
-                  <Typography>Name</Typography>
-                  <Typography>Email</Typography>
-                  <Button className="bg-primary text-white text-sm font-medium h-7 hover:bg-primary px-4 normal-case" onClick={() => handleSignOut()}>
-                    Signout
-                  </Button>
+                <Box padding="0 10px">
+                  {userData?.uid ? (
+                    <Box>
+                      <Box>
+                        <Avatar
+                          alt={userData?.displayName}
+                          src={userData?.photoURL}
+                        />
+                      </Box>
+                      <Typography className="mb-1">
+                        {userData?.displayName}
+                      </Typography>
+                      <Typography className="mb-2">
+                        {userData?.email}
+                      </Typography>
+                      <Button
+                        className="bg-primary w-full text-white text-sm font-medium h-7 hover:bg-primary px-4 normal-case"
+                        onClick={() => handleSignOut()}
+                      >
+                        Signout
+                      </Button>
+                    </Box>
+                  ) : (
+                    <Box>
+                      <Button
+                        className="bg-primary w-full text-white text-sm font-medium h-7 hover:bg-primary px-4 normal-case"
+                        onClick={() => router.push("/Login")}
+                      >
+                        Signin
+                      </Button>
+                    </Box>
+                  )}
                 </Box>
               </Menu>
             </Box>
