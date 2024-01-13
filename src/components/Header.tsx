@@ -22,7 +22,7 @@ const ITEM_HEIGHT = 48;
 const Header = () => {
   const router = useRouter();
   const { cart, getCart, quantitys } = useGlobalCart();
-  const { userData, setUserData } = useGlobalUser();
+  const { userData, setUserData, handleSignOut } = useGlobalUser();
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorProfile, setAnchorProfile] = React.useState<null | HTMLElement>(
@@ -33,17 +33,6 @@ const Header = () => {
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleSignOut = () => {
-    signOut(auth)
-      .then(() => {
-        handleCloseProfile();
-        setUserData(null);
-        router.push("/Login");
-      })
-      .catch((error: any) => {
-        console.log("cant signout ==> ", error);
-      });
-  };
   const handleClickProfile = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorProfile(event.currentTarget);
   };
@@ -53,6 +42,11 @@ const Header = () => {
   const handleCloseProfile = () => {
     setAnchorProfile(null);
   };
+
+  const handleSignoutButton = () => {
+    handleCloseProfile()
+    handleSignOut()
+  }
   useEffect(() => {
     // getCart();
   }, [quantitys]);
@@ -178,7 +172,7 @@ const Header = () => {
                       </Typography>
                       <Button
                         className="bg-primary w-full text-white text-sm font-medium h-7 hover:bg-primary px-4 normal-case"
-                        onClick={() => handleSignOut()}
+                        onClick={() => handleSignoutButton()}
                       >
                         Signout
                       </Button>

@@ -9,6 +9,7 @@ import React, {
   useReducer,
   useEffect,
 } from "react";
+import { useLoader } from "./loaderContext";
 
 const API = "http://localhost:5000/products";
 
@@ -48,21 +49,26 @@ interface AppContextProps {
 }
 const AppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const {setGlobalLoading} = useLoader()
   const getProducts = async (url: string) => {
     dispatch({ type: "SET_LOADING" });
+    setGlobalLoading(true)
     try {
       const res = await fetch(url);
       const data = await res.json();
       dispatch({ type: "MY_API_DATA", payload: data });
+      setGlobalLoading(false)
     } catch (error) {
       dispatch({ type: "API_ERROR" });
     }
   };
   const getSingleProduct = async (params: string) => {
+    setGlobalLoading(true)
     try {
       const res = await fetch(`http://localhost:5000/products/${params}`);
       const data = await res.json();
       dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
+      setGlobalLoading(false)
     } catch (error) {
       console.log("Can't get data ", error);
     }

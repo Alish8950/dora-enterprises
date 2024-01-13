@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalUser } from "@/context/authContext";
 
 const Login = () => {
-  const { userData, setUserData, loginSubmit } = useGlobalUser();
+  const { userData, setUserData, loginSubmit, isLoading } = useGlobalUser();
   const router = useRouter();
   const provider = new GoogleAuthProvider();
 

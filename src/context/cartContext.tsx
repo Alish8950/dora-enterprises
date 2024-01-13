@@ -11,6 +11,7 @@ import React, {
 } from "react";
 import reducer from "@/reducer/cartReducer";
 import { useRouter } from "next/navigation";
+import { useLoader } from "./loaderContext";
 
 interface AppContextProps {
   children: ReactNode;
@@ -72,6 +73,7 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 const API_URL = "http://localhost:5000/cart";
 
 const CartProvider: FC<AppContextProps> = ({ children }) => {
+  const {setGlobalLoading} = useLoader()
   const [state, dispatch] = useReducer(reducer, initialState);
   const [totalCartQuantity, setTotalCartQuantity] = useState(0)
   const [quantitys, setQuantity] = useState<number[]>([]);
@@ -81,10 +83,12 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
   // get cart items
   const getCart = async () => {
     dispatch({ type: "SET_LOADING" });
+    setGlobalLoading(true)
     try {
       const res = await fetch("http://localhost:5000/cart");
       const data = await res.json();
       dispatch({ type: "MY_API_DATA", payload: data });
+      setGlobalLoading(false)
     } catch (error) {
       dispatch({ type: "API_ERROR" });
     }
@@ -98,6 +102,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     quantity: number,
     productImages: string
   ) => {
+    setGlobalLoading(true)
     try {
       await fetch("http://localhost:5000/cart", {
         method: "POST",
@@ -113,6 +118,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
         }),
       });
       router.push("/Cart");
+      setGlobalLoading(false)
     } catch (error) {
       console.log(error, "can't add item to cart");
     }
@@ -124,6 +130,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
     existingItem: Cart,
     cartQuantity: boolean
   ) => {
+    setGlobalLoading(true)
     try {
       if (existingItem && existingItem.quantity !== undefined) {
         await fetch(`http://localhost:5000/cart/${id}`, {
@@ -139,6 +146,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
           }),
         });
         router.push("/Cart");
+        setGlobalLoading(false)
       }
     } catch (error) {
       console.log("Can't update cart => ", error);
@@ -151,6 +159,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
 
 // delete all items to cart
   async function deleteAllItems(): Promise<void> {
+    setGlobalLoading(true)
   try {
     // Step 1: Fetch the list of items
     const response = await fetch("http://localhost:5000/cart");
@@ -172,6 +181,7 @@ const CartProvider: FC<AppContextProps> = ({ children }) => {
       console.log(`Item with ID ${item.id} deleted.`);
     }
     setUpdatedCart([]);
+    setGlobalLoading(false)
   } catch (error) {
     console.error("Error:", error);
   }

@@ -153,6 +153,14 @@
       "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "id": "8",
+      "productImage": "testImage",
+      "productName": "Champagne Celebration",
+      "productPrice": 69.99,
+      "quantity": 3
+    }
+  ],
   "address": []
 }

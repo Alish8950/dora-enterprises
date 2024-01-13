@@ -8,6 +8,8 @@ import { TestimonialsProvider } from "@/context/testimonialsContext";
 import { CartProvider } from "@/context/cartContext";
 import { AddressProvider } from "@/context/addressContext";
 import { AuthAppProvider } from "@/context/authContext";
+import { GlobalLoader, LoaderProvider, useLoader } from "@/context/loaderContext";
+import Loader from "@/components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,16 +26,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AuthAppProvider>
-          <AppProvider>
-            <CartProvider>
-              <AddressProvider>
-                <TestimonialsProvider>{children}</TestimonialsProvider>
-              </AddressProvider>
-            </CartProvider>
-          </AppProvider>
-        </AuthAppProvider>
+        <LoaderProvider>
+          <AuthAppProvider>
+            <AppProvider>
+              <CartProvider>
+                <AddressProvider>
+                  <TestimonialsProvider>
+                    {children}
+                    <GlobalLoader />
+                  </TestimonialsProvider>
+                </AddressProvider>
+              </CartProvider>
+            </AppProvider>
+          </AuthAppProvider>
+        </LoaderProvider>
       </body>
     </html>
   );
 }
+
+
