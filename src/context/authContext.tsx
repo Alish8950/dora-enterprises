@@ -1,7 +1,7 @@
 "use client";
 
 import reducer from "@/reducer/authReducer";
-import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup } from "@firebase/auth";
+import { GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from "@firebase/auth";
 import React, {
   FC,
   ReactNode,
@@ -13,6 +13,8 @@ import React, {
 } from "react";
 import { auth } from "../../firebase";
 import { User } from "@firebase/auth";
+import { useLoader } from "./loaderContext";
+import { useRouter } from "next/navigation";
 
 const API = "http://localhost:5000/products";
 
@@ -27,7 +29,8 @@ export interface UserState {
   user: User | null;
   userData: any;
   setUserData: (ele: any) => void;
-  loginSubmit: () => void
+  loginSubmit: () => void;
+  handleSignOut: () => void
 }
 
 const initialState: UserState = {
@@ -37,6 +40,7 @@ const initialState: UserState = {
   userData: {},
   setUserData: () => {},
   loginSubmit: () => {},
+  handleSignOut: () => {},
 };
 
 const AuthAppContext = createContext<UserState | undefined>(undefined);
@@ -45,12 +49,15 @@ interface AppContextProps {
   children: ReactNode;
 }
 const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
+  const router = useRouter();
   const [state, dispatch] = useReducer(reducer, initialState);
+  const {setGlobalLoading} = useLoader()
   const [userData, setUserData] = useState<User | null>(null);
   const provider = new GoogleAuthProvider();
 
   const loginSubmit = () => {
     dispatch({ type: "SET_LOADING" });
+    setGlobalLoading(true)
     signInWithPopup(auth, provider)
       .then((result: any) => {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -60,6 +67,7 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
         const user = result.user;
         setUserData(user);
         dispatch({ type: "MY_API_DATA", payload: user });
+        setGlobalLoading(false)
         // IdP data available using getAdditionalUserInfo(result)
         // ...
       })
@@ -74,6 +82,20 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
         const credential = GoogleAuthProvider.credentialFromError(error);
         dispatch({ type: "API_ERROR" });
         // ...
+      });
+  };
+
+  const handleSignOut = () => {
+    setGlobalLoading(true)
+    signOut(auth)
+      .then(() => {
+        // handleCloseProfile();
+        setUserData(null);
+        router.push("/Login");
+        setGlobalLoading(false)
+      })
+      .catch((error: any) => {
+        console.log("cant signout ==> ", error);
       });
   };
 
@@ -110,7 +132,7 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
   //   };
 
   return (
-    <AuthAppContext.Provider value={{ ...state, setUserData, userData, loginSubmit }}>{children}</AuthAppContext.Provider>
+    <AuthAppContext.Provider value={{ ...state, setUserData, userData, loginSubmit, handleSignOut }}>{children}</AuthAppContext.Provider>
   );
 };
 

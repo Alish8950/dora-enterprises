@@ -8,6 +8,7 @@ import LearnMore from "@/components/LearnMore";
 import Testimonials from "@/components/Testimonials";
 import PopularProducts from "@/components/PopularProducts";
 import { useGlobalUser } from "@/context/authContext";
+import Loader from "@/components/Loader";
 
 export default function Home() {
 
