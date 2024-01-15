@@ -219,6 +219,7 @@ export default function Cart() {
             {/* <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4">
               Check-out
             </Button> */}
+            
             <CheckoutDialogue cart={updatedCart} totalPrice={totalPrice} />
             <Typography className="text-base text-grey-[100] ">
               Tax and shipping cost will be calculated later
