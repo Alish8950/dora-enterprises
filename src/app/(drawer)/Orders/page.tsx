@@ -7,13 +7,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Image from "next/image";
-import ProductImage from "../../../assets/images/product_image.jpg";
-import RemoveIcon from "@mui/icons-material/Remove";
-import AddIcon from "@mui/icons-material/Add";
-import CheckoutDialogue from "@/components/CheckoutDialogue";
-import { useGlobalCart } from "@/context/cartContext";
-import { Cart as CartInterface } from "../../../context/cartContext";
 
 
 
