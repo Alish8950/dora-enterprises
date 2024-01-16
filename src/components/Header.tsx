@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { useGlobalCart } from "@/context/cartContext";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
+import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useGlobalUser } from "@/context/authContext";
 
 const options = ["None", "Atria", "Callisto"];
@@ -44,9 +45,9 @@ const Header = () => {
   };
 
   const handleSignoutButton = () => {
-    handleCloseProfile()
-    handleSignOut()
-  }
+    handleCloseProfile();
+    handleSignOut();
+  };
   useEffect(() => {
     // getCart();
   }, [quantitys]);
@@ -202,6 +203,12 @@ const Header = () => {
               ) : (
                 ""
               )}
+            </Box>
+            <Box>
+              <ListAltIcon
+                className="cursor-pointer"
+                onClick={() => router.push("/Orders")}
+              />
             </Box>
           </Box>
         </Box>
