@@ -29,11 +29,6 @@ const ordersReducer = (state: OrderState, action: OrderAction) => {
         isError: false,
         orders: action.payload,
       };
-    // case "SINGLE_PRODUCT_DATA":
-    //   return {
-    //     ...state,
-    //     singleProduct: action.payload,
-    //   };
     default:
       return state;
   }

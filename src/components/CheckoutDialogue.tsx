@@ -112,8 +112,6 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
     handleNextStep();
   };
 
-  // console.log(watch(123)) // watch input value by passing the name of it
-
   // Dialogue Box State
   const [open, setOpen] = useState(false);
   // Custom Stepper State
@@ -150,9 +148,6 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
   };
   useEffect(() => {
     const fetchStateCountry = async () => {
-      // const data = fetch("/api/country_state");
-      // const res = await data.json();
-      // console.log(res);
       let data: any = await fetch("/api/country_state");
       data = await data.json();
       setCountryStateArr(data);

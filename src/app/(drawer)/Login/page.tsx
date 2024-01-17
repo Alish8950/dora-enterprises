@@ -22,7 +22,6 @@ const Login = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // console. log(user);
         setUserData(user)
         router.push("/Home");
         const uid = user.uid;
@@ -31,11 +30,6 @@ const Login = () => {
       }
     });
   }, []);
-
-//   useEffect(() => {
-// console.log(userData, "userDatauserDatauserDatauserDatauserDatauserData")
-//   },[userData])
-
   
   return (
     <>

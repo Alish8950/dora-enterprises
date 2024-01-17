@@ -16,13 +16,6 @@ import { User } from "@firebase/auth";
 import { useLoader } from "./loaderContext";
 import { useRouter } from "next/navigation";
 
-const API = "http://localhost:5000/products";
-
-// export interface User {
-//   displayName: string;
-//   email: string;
-// }
-
 export interface UserState {
   isLoading: boolean;
   isError: boolean;
@@ -102,34 +95,11 @@ const AuthAppProvider: FC<AppContextProps> = ({ children }) => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // console.log(user);
         setUserData(user)
-        // router.push("/Home");
-        const uid = user.uid;
       } else {
-        // router.push("/Login");
       }
     });
   }, []);
-  //   const getProducts = async (url: string) => {
-  //     dispatch({ type: "SET_LOADING" });
-  //     try {
-  //       const res = await fetch(url);
-  //       const data = await res.json();
-  //       dispatch({ type: "MY_API_DATA", payload: data });
-  //     } catch (error) {
-  //       dispatch({ type: "API_ERROR" });
-  //     }
-  //   };
-  //   const getSingleProduct = async (params: string) => {
-  //     try {
-  //       const res = await fetch(`http://localhost:5000/products/${params}`);
-  //       const data = await res.json();
-  //       dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
-  //     } catch (error) {
-  //       console.log("Can't get data ", error);
-  //     }
-  //   };
 
   return (
     <AuthAppContext.Provider value={{ ...state, setUserData, userData, loginSubmit, handleSignOut }}>{children}</AuthAppContext.Provider>
