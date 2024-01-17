@@ -34,7 +34,6 @@ const addressReducer = (state: AddressState, action: AddressAction) => {
     default:
       return state;
   }
-  return state;
 };
 
 export default addressReducer;

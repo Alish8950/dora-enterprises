@@ -19,8 +19,6 @@ import { Cart as CartInterface } from "../../../context/cartContext";
 
 export default function Cart() {
   const { cart, updateItemQuantity, getCart, setQuantity, quantitys, deleteAllItems, updatedCart, setUpdatedCart } = useGlobalCart();
-  // const [updatedCart, setUpdatedCart] = useState<CartInterface[]>([]);
-  // const [quantitys, setQuantity] = useState<number[]>([]);
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
@@ -63,7 +61,6 @@ export default function Cart() {
       })
     );
     updateItemQuantity(id, quantitys[index] + 1, existingItem, true);
-    // getCart()
   };
   // Function to decrease quantity
   const decreaseQuantity = (
@@ -176,7 +173,6 @@ export default function Cart() {
                                 quantitys[index]
                               )
                             }
-                            // onClick={() => updateQuantity(cart.id, false)}
                           />
                           <Typography>{quantitys[index]}</Typography>
                           <AddIcon
@@ -191,7 +187,6 @@ export default function Cart() {
                                 quantitys[index]
                               )
                             }
-                            // onClick={() => updateQuantity(cart.id, true)}
                           />
                         </Box>
                       </TableCell>
@@ -216,10 +211,6 @@ export default function Cart() {
             <Typography className="text-xl text-secondary font-medium">
               Sub-total: ${Math.round(totalPrice * 100) / 100}
             </Typography>
-            {/* <Button className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4">
-              Check-out
-            </Button> */}
-            
             <CheckoutDialogue cart={updatedCart} totalPrice={totalPrice} />
             <Typography className="text-base text-grey-[100] ">
               Tax and shipping cost will be calculated later

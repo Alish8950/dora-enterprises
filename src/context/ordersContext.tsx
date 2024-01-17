@@ -23,14 +23,12 @@ export interface OrderState {
   isLoading: boolean;
   isError: boolean;
   orders: Order[];
-  // singleProduct: Order | null;
 }
 
 const initialState: OrderState = {
   isLoading: false,
   isError: false,
   orders: [],
-  // singleProduct: null,
 };
 
 const AppContext = createContext<OrderState | undefined>(undefined);
@@ -55,17 +53,6 @@ const OrderContextProvider: FC<AppContextProps> = ({ children }) => {
       dispatch({ type: "API_ERROR" });
     }
   };
-  // const getSingleProduct = async (params: string) => {
-  //   setGlobalLoading(true)
-  //   try {
-  //     const res = await fetch(`http://localhost:5000/products/${params}`);
-  //     const data = await res.json();
-  //     dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
-  //     setGlobalLoading(false)
-  //   } catch (error) {
-  //     console.log("Can't get data ", error);
-  //   }
-  // };
 
   useEffect(() => {
     getOrders();
