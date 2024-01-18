@@ -14,11 +14,20 @@ import AddIcon from "@mui/icons-material/Add";
 import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
 import { Cart as CartInterface } from "../../../context/cartContext";
-
-
+import { useGlobalOrders } from "@/context/ordersContext";
 
 export default function Cart() {
-  const { cart, updateItemQuantity, getCart, setQuantity, quantitys, deleteAllItems, updatedCart, setUpdatedCart } = useGlobalCart();
+  const {
+    cart,
+    updateItemQuantity,
+    getCart,
+    setQuantity,
+    quantitys,
+    deleteAllItems,
+    updatedCart,
+    setUpdatedCart,
+  } = useGlobalCart();
+  const { updateOrders } = useGlobalOrders();
   const totalPrice = cart.reduce((total, currentItem, index) => {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
@@ -78,7 +87,7 @@ export default function Cart() {
       productPrice,
       quantity,
     };
-    if (quantitys[index]-1) {
+    if (quantitys[index] - 1) {
       setQuantity(
         quantitys.map((qty: any, i: any) => {
           if (i === index && qty > 1) {
@@ -101,13 +110,14 @@ export default function Cart() {
         },
       });
 
-      setUpdatedCart((prevData: any) => prevData.filter((item: any) => item.id !== id));
+      setUpdatedCart((prevData: any) =>
+        prevData.filter((item: any) => item.id !== id)
+      );
     } catch (error) {
       console.log("Cannot Delete => ", error);
     }
   };
 
- 
   return (
     <>
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">

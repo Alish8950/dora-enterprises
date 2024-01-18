@@ -169,5 +169,24 @@
       "productImage": "testImage"
     }
   ],
-  "orders": []
+  "orders": [
+    [
+      {
+        "id": "8",
+        "productImage": "testImage",
+        "productName": "Champagne Celebration",
+        "productPrice": 69.99,
+        "quantity": 3,
+        "status": "On the way"
+      },
+      {
+        "id": "1",
+        "productName": "Whiskey Deluxe",
+        "productPrice": 49.99,
+        "quantity": 1,
+        "productImage": "testImage",
+        "status": "On the way"
+      }
+    ]
+  ]
 }
