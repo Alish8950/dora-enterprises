@@ -153,21 +153,23 @@
       "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
     }
   ],
-  "cart": [
+  "cart": [],
+  "orders": [
     {
-      "id": "8",
+      "id": "6",
+      "productName": "Brandy Select",
+      "productPrice": 54.99,
+      "quantity": 1,
       "productImage": "testImage",
-      "productName": "Champagne Celebration",
-      "productPrice": 69.99,
-      "quantity": 3
+      "status": "not yet dispatched"
     },
     {
-      "id": "1",
-      "productName": "Whiskey Deluxe",
-      "productPrice": 49.99,
+      "id": "8",
+      "productName": "Champagne Celebration",
+      "productPrice": 69.99,
       "quantity": 1,
-      "productImage": "testImage"
+      "productImage": "testImage",
+      "status": "not yet dispatched"
     }
-  ],
-  "orders": []
+  ]
 }

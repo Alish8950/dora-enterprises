@@ -7,10 +7,12 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
-
+import { useGlobalOrders } from "@/context/ordersContext";
+import ProductImage from '../../../assets/images/product_image.jpg';
+import Image from "next/image";
 
 export default function Orders() {
+  const { orders } = useGlobalOrders();
 
   return (
     <>
@@ -35,7 +37,44 @@ export default function Orders() {
                   <TableCell align="left">Status</TableCell>
                 </TableRow>
               </TableHead>
-              {/* <TableBody>
+              <TableBody>
+                {orders.map((order) => {
+                  return (
+                    <TableRow key={order.id}>
+                      <TableCell component="th" scope="row">
+                        <Box className="flex gap-7 items-center">
+                          <Box className="max-w-[160px]">
+                            <Image src={ProductImage} alt="product image" />
+                          </Box>
+                          <Box>
+                            <Typography className="text-[26px] text-secondary font-medium">
+                              {order.productName}
+                            </Typography>
+                          </Box>
+                        </Box>
+                      </TableCell>
+                      <TableCell align="left" className="text-lg font-medium">
+                        ${order.productPrice}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Typography className="mr-7">
+                          {order.quantity}
+                        </Typography>
+                      </TableCell>
+                      <TableCell align="left" className="text-lg font-medium">
+                        $
+                        {Math.round(
+                          order.productPrice * order.quantity * 100
+                        ) / 100}
+                      </TableCell>
+                      <TableCell align="left" className="text-lg font-medium">
+                        {order.status}
+                      </TableCell>
+                    </TableRow>
+                  );
+                })}
+              </TableBody>
+              {/* 
                 {updatedCart.map((cart: any, index: number) => {
                   return (
                     <TableRow key={cart.id}>
@@ -68,8 +107,7 @@ export default function Orders() {
                       </TableCell>
                     </TableRow>
                   );
-                })}
-              </TableBody> */}
+                })}*/}
             </Table>
           </TableContainer>
         </Box>

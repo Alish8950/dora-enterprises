@@ -35,6 +35,7 @@ import { Controller, useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useGlobalAddress } from "@/context/addressContext";
 import { ShippingAddress } from "@/context/addressContext";
+import { useGlobalOrders } from "@/context/ordersContext";
 
 interface StateModel {
   name: string;
@@ -81,6 +82,7 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
 }) => {
   const [check, setCheck] = useState(false);
   const { updateAddressList } = useGlobalAddress();
+  const { updateOrders } = useGlobalOrders();
   const { deleteAllItems } = useGlobalCart();
   const router = useRouter();
   const [saveAddress, setSaveAddress] = useState<ShippingAddress>(
@@ -630,9 +632,9 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
                         // onClick={() => {
                         //   placeOrder();
                         // }}
-                        onClick={handleNextStep}
+                        onClick={() => updateOrders(cart)}
                       >
-                        Go to payment
+                        Place Order
                       </Button>
                     )}
                     {/* <Button

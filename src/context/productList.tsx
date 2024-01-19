@@ -73,9 +73,23 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
       console.log("Can't get data ", error);
     }
   };
+  const getProductsApi = async () => {
+    dispatch({ type: "SET_LOADING" });
+    setGlobalLoading(true)
+    try {
+      const res = await fetch("http://localhost:3004/products/");
+      const data = await res.json();
+      console.log(data, "datadatadatadatadatadatadata")
+      setGlobalLoading(false)
+    } catch (error) {
+      dispatch({ type: "API_ERROR" });
+    }
+  };
+  
 
   useEffect(() => {
     getProducts(API);
+    // getProductsApi();
   }, []);
   return (
     <AppContext.Provider value={{ ...state, getSingleProduct }}>
