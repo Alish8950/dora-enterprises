@@ -77,7 +77,7 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
     dispatch({ type: "SET_LOADING" });
     setGlobalLoading(true)
     try {
-      const res = await fetch("http://localhost:3000/products/");
+      const res = await fetch("http://localhost:3004/products/");
       const data = await res.json();
       console.log(data, "datadatadatadatadatadatadata")
       setGlobalLoading(false)

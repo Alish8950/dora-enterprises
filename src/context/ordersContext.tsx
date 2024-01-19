@@ -11,26 +11,30 @@ import React, {
 } from "react";
 import { useLoader } from "./loaderContext";
 
+import { Cart, useGlobalCart } from "./cartContext";
+import { useRouter } from "next/navigation";
+
 export interface Order {
   id: string;
   productName: string;
   productPrice: number;
   quantity: number;
   productImage: string;
+  status: string;
 }
 
 export interface OrderState {
   isLoading: boolean;
   isError: boolean;
   orders: Order[];
-  updateOrders: (orders: Order[]) => void;
+  updateOrders: (orders: Cart[]) => void;
 }
 
 const initialState: OrderState = {
   isLoading: false,
   isError: false,
   orders: [],
-  updateOrders: () => {}
+  updateOrders: () => {},
 };
 
 const AppContext = createContext<OrderState | undefined>(undefined);
@@ -41,6 +45,8 @@ interface AppContextProps {
 const OrderContextProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const { setGlobalLoading } = useLoader();
+  const {deleteAllItems, getCart} = useGlobalCart();
+  const router = useRouter();
 
   const getOrders = async () => {
     dispatch({ type: "SET_LOADING" });
@@ -55,32 +61,35 @@ const OrderContextProvider: FC<AppContextProps> = ({ children }) => {
     }
   };
 
-  const updateOrders = async (orders: Order[]) => {
+  const updateOrders = async (orders: Cart[]) => {
     setGlobalLoading(true);
-     // Add the static property to each order object
-  const ordersList = orders.map(order => ({
-    ...order,
-    status: "On the way"
-  }));
-  console.log(ordersList)
-    try {
-      await fetch("http://localhost:5000/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(ordersList),
-      })
-    } catch (error) {
-      console.log("Can't add item to cart ==> ", error);
+    // Add the static property to each order object
+
+    for (const order of orders) {
+      try {
+        await fetch("http://localhost:5000/orders", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ ...order, status: "not yet dispatched" }),
+        });
+      } catch (error) {
+        console.log("Can't add item to cart ==> ", error);
+      }
     }
+    deleteAllItems();
+    getOrders();
+    router.push("/Orders")
     setGlobalLoading(false);
   };
   useEffect(() => {
     getOrders();
   }, []);
   return (
-    <AppContext.Provider value={{ ...state, updateOrders }}>{children}</AppContext.Provider>
+    <AppContext.Provider value={{ ...state, updateOrders }}>
+      {children}
+    </AppContext.Provider>
   );
 };
 
