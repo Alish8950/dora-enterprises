@@ -12,25 +12,26 @@ import {
 import { auth } from "../../../../firebase";
 import { useRouter } from "next/navigation";
 import { useGlobalUser } from "@/context/authContext";
+import { useGlobalRouter } from "@/context/routeContext";
 
 const Login = () => {
   const { userData, setUserData, loginSubmit, isLoading } = useGlobalUser();
+  const { home } = useGlobalRouter();
   const router = useRouter();
   const provider = new GoogleAuthProvider();
-
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUserData(user)
-        router.push("/Home");
+        setUserData(user);
+        home();
         const uid = user.uid;
       } else {
         router.push("/Login");
       }
     });
   }, []);
-  
+
   return (
     <>
       <Box className="w-full h-[53.5vh] flex justify-center items-center">
