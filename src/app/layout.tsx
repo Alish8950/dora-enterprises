@@ -15,6 +15,7 @@ import {
 } from "@/context/loaderContext";
 import Loader from "@/components/Loader";
 import { OrderContextProvider } from "@/context/ordersContext";
+import { RouterProvider } from "@/context/routeContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,22 +32,24 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <LoaderProvider>
-          <AuthAppProvider>
-            <AppProvider>
-              <CartProvider>
-                <AddressProvider>
-                  <OrderContextProvider>
-                    <TestimonialsProvider>
-                      {children}
-                      <GlobalLoader />
-                    </TestimonialsProvider>
-                  </OrderContextProvider>
-                </AddressProvider>
-              </CartProvider>
-            </AppProvider>
-          </AuthAppProvider>
-        </LoaderProvider>
+        <RouterProvider>
+          <LoaderProvider>
+            <AuthAppProvider>
+              <AppProvider>
+                <CartProvider>
+                  <AddressProvider>
+                    <OrderContextProvider>
+                      <TestimonialsProvider>
+                        {children}
+                        <GlobalLoader />
+                      </TestimonialsProvider>
+                    </OrderContextProvider>
+                  </AddressProvider>
+                </CartProvider>
+              </AppProvider>
+            </AuthAppProvider>
+          </LoaderProvider>
+        </RouterProvider>
       </body>
     </html>
   );
