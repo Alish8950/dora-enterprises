@@ -14,14 +14,15 @@ import { useLoader } from "./loaderContext";
 const API = "http://localhost:5000/products";
 
 export interface Product {
-  id: string;
+  _id: string;
   productName: string;
   productPrice: number;
   averageRating: number;
   productImage: string;
   quantity: string;
-  alcoholPercentage: number;
-  alcoholDescription: string;
+  volume: number;
+  alcoholConcentration: number;
+  beverageDescription: string;
 }
 
 export interface ProductState {
@@ -50,11 +51,23 @@ interface AppContextProps {
 const AppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {setGlobalLoading} = useLoader()
-  const getProducts = async (url: string) => {
+  // const getProducts = async (url: string) => {
+  //   dispatch({ type: "SET_LOADING" });
+  //   setGlobalLoading(true)
+  //   try {
+  //     const res = await fetch(url);
+  //     const data = await res.json();
+  //     dispatch({ type: "MY_API_DATA", payload: data });
+  //     setGlobalLoading(false)
+  //   } catch (error) {
+  //     dispatch({ type: "API_ERROR" });
+  //   }
+  // };
+  const getProducts = async () => {
     dispatch({ type: "SET_LOADING" });
     setGlobalLoading(true)
     try {
-      const res = await fetch(url);
+      const res = await fetch("http://localhost:3004/products/");
       const data = await res.json();
       dispatch({ type: "MY_API_DATA", payload: data });
       setGlobalLoading(false)
@@ -65,7 +78,7 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
   const getSingleProduct = async (params: string) => {
     setGlobalLoading(true)
     try {
-      const res = await fetch(`http://localhost:5000/products/${params}`);
+      const res = await fetch(`http://localhost:3004/products/${params}`);
       const data = await res.json();
       dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
       setGlobalLoading(false)
@@ -88,7 +101,7 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
   
 
   useEffect(() => {
-    getProducts(API);
+    getProducts();
     // getProductsApi();
   }, []);
   return (

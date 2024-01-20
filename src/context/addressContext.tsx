@@ -74,7 +74,7 @@ const AddressProvider: FC<AppContextProps> = ({ children }) => {
   };
 
   useEffect(() => {
-    getAddress();
+    // getAddress();
   }, []);
 
   return (
