@@ -24,7 +24,7 @@ const Login = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserData(user);
-        home();
+        router.push("/Home");
         const uid = user.uid;
       } else {
         router.push("/Login");

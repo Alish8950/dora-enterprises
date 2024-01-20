@@ -22,9 +22,9 @@ const PopularProducts = () => {
           <Box className="grid grid-cols-4 gap-8">
             {popularProducts.map((currElem) => {
               return (
-                <Box key={currElem.id} className="max-w-[255px] shadow-lg">
+                <Box key={currElem._id} className="max-w-[255px] shadow-lg">
                   <Box className=" bg-white-[200] flex items-center justify-center cursor-pointer"
-                  onClick={() => router.push(`/Product/${currElem.id}`)}>
+                  onClick={() => router.push(`/Product/${currElem._id}`)}>
                     <Image
                       className="w-[200px]"
                       src={SampleProduct}

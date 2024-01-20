@@ -7,8 +7,11 @@ import Products from "@/components/Products";
 import LearnMore from "@/components/LearnMore";
 import Testimonials from "@/components/Testimonials";
 import PopularProducts from "@/components/PopularProducts";
+import { useGlobalUser } from "@/context/authContext";
 
 export default function Home() {
+  const {userData} = useGlobalUser()
+  console.log(userData)
 
   return (
     <>

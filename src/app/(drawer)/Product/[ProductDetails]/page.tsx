@@ -186,15 +186,15 @@ export default function Product({
               <Typography>Key Features</Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Description: </span>
-                {singleProduct?.alcoholDescription}
+                {singleProduct?.beverageDescription}
               </Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Quantity: </span>
-                {singleProduct?.quantity}
+                {singleProduct?.volume}ML
               </Typography>
               <Typography className="text-base text-green-[200]">
                 <span className="text-grey-[700]">Alcohol Percentage: </span>
-                {singleProduct?.alcoholPercentage}%
+                {singleProduct?.alcoholConcentration}%
               </Typography>
               <Box className="flex justify-between items-center max-w-[540px]"></Box>
             </Box>

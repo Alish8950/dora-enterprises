@@ -126,11 +126,11 @@ const Products = () => {
           return (
             <Box
               className="max-w-[255px] shadow-lg cursor-pointer"
-              key={cus.id}
+              key={cus._id}
             >
               <Box
                 className=" bg-white-[200] flex items-center justify-center"
-                onClick={() => router.push(`/Product/${cus.id}`)}
+                onClick={() => router.push(`/Product/${cus._id}`)}
               >
                 <Image
                   className="w-[200px]"
