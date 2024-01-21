@@ -44,7 +44,7 @@ interface AppContextProps {
 }
 const OrderContextProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { setGlobalLoading } = useLoader();
+  const { setGlobalLoading, goToOrders } = useLoader();
   const {deleteAllItems, getCart} = useGlobalCart();
   const router = useRouter();
 
@@ -80,7 +80,7 @@ const OrderContextProvider: FC<AppContextProps> = ({ children }) => {
     }
     deleteAllItems();
     getOrders();
-    router.push("/Orders")
+    goToOrders()
     setGlobalLoading(false);
   };
   useEffect(() => {

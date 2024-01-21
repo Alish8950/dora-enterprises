@@ -15,6 +15,7 @@ import CheckoutDialogue from "@/components/CheckoutDialogue";
 import { useGlobalCart } from "@/context/cartContext";
 import { Cart as CartInterface } from "../../../context/cartContext";
 import { useGlobalOrders } from "@/context/ordersContext";
+import { useLoader } from "@/context/loaderContext";
 
 export default function Cart() {
   const {
@@ -32,7 +33,10 @@ export default function Cart() {
     return total + currentItem.productPrice * quantitys[index];
   }, 0);
 
+  const {setGlobalLoading} = useLoader();
+
   useEffect(() => {
+    setGlobalLoading(false);
     // Create an array of quantities from the cart items
     const quantities = cart.map((item) => item.quantity);
 

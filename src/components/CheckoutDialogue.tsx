@@ -84,7 +84,6 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
   const { updateAddressList } = useGlobalAddress();
   const { updateOrders } = useGlobalOrders();
   const { deleteAllItems } = useGlobalCart();
-  const router = useRouter();
   const [saveAddress, setSaveAddress] = useState<ShippingAddress>(
     initialShippingAddress
   );
@@ -165,11 +164,6 @@ const CheckoutDialogue: React.FC<ChildComponentProps> = ({
       setStateArr(selectedCountry ? selectedCountry.states : []);
     }
   }, [selectCountry, countryStateArr]);
-
-  const placeOrder = () => {
-    deleteAllItems();
-    router.push("/Home");
-  };
 
   return (
     <>

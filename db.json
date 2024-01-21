@@ -153,7 +153,15 @@
       "comment": "Enjoyed the Craft IPA. Bold hops make it a craft beer lover's dream!"
     }
   ],
-  "cart": [],
+  "cart": [
+    {
+      "id": "65aba9946c0fad4e91b281ac",
+      "productName": "Arctic Ice Tequila",
+      "productPrice": 47,
+      "quantity": 1,
+      "productImage": "testImage"
+    }
+  ],
   "orders": [
     {
       "id": "6",

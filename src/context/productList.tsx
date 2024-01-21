@@ -92,7 +92,6 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
     try {
       const res = await fetch("http://localhost:3004/products/");
       const data = await res.json();
-      console.log(data, "datadatadatadatadatadatadata")
       setGlobalLoading(false)
     } catch (error) {
       dispatch({ type: "API_ERROR" });

@@ -16,6 +16,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { useGlobalCart } from "@/context/cartContext";
 import { useGlobalProducts } from "@/context/productList";
+import { useLoader } from "@/context/loaderContext";
 
 const baseURL = "http://localhost:5000";
 
@@ -26,12 +27,14 @@ export default function Product({
 }) {
   const { getSingleProduct, singleProduct } = useGlobalProducts();
   const { cart, addItemToCart, updateItemQuantity } = useGlobalCart();
+  const { setGlobalLoading } = useLoader();
   const [quantity, setQuantity] = useState(1);
   const [subscriptionDuration, setSubscriptionDuration] = useState("4");
 
   const existingItem = cart.find((item) => item.id === params.ProductDetails);
 
   useEffect(() => {
+    setGlobalLoading(false);
     getSingleProduct(params.ProductDetails);
   }, []);
 

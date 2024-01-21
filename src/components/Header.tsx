@@ -16,6 +16,7 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import { useGlobalUser } from "@/context/authContext";
+import { useLoader } from "@/context/loaderContext";
 
 const options = ["None", "Atria", "Callisto"];
 const ITEM_HEIGHT = 48;
@@ -24,6 +25,7 @@ const Header = () => {
   const router = useRouter();
   const { cart, getCart, quantitys } = useGlobalCart();
   const { userData, setUserData, handleSignOut } = useGlobalUser();
+  const {goToCart, goToHome, goToOrders} = useLoader()
   const [totalQuantity, setTotalQuantity] = useState(0);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [anchorProfile, setAnchorProfile] = React.useState<null | HTMLElement>(
@@ -62,7 +64,7 @@ const Header = () => {
     <>
       <Box className="sticky top-0 bg-white z-10 border-b border-green-[100]">
         <Box className="flex justify-between items-center max-w-[77%] m-auto h-[75px]">
-          <Box className="cursor-pointer" onClick={() => router.push("/Home")}>
+          <Box className="cursor-pointer" onClick={() => goToHome()}>
             <Image src={EcomLogo} alt="logo" />
           </Box>
           <Box className="flex items-center gap-4">
@@ -194,7 +196,7 @@ const Header = () => {
             <Box className="relative">
               <ShoppingCartOutlinedIcon
                 className="cursor-pointer"
-                onClick={() => router.push("/Cart")}
+                onClick={() => goToCart()}
               />
               {totalQuantity ? (
                 <Box className="absolute top-0 bg-primary text-white flex items-center justify-center top-[-7px] right-[-6px] w-4 h-4 min-w-4 rounded-full text-[10px]">
@@ -207,7 +209,7 @@ const Header = () => {
             <Box>
               <ListAltIcon
                 className="cursor-pointer"
-                onClick={() => router.push("/Orders")}
+                onClick={() => goToOrders()}
               />
             </Box>
           </Box>
