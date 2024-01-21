@@ -4,6 +4,7 @@ import React from "react";
 import LogoWhite from "../assets/images/logo_white.png"
 
 const Footer = () => {
+  
   return (
     <>
       <Box className='bg-secondary'>
