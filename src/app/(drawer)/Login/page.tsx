@@ -12,11 +12,11 @@ import {
 import { auth } from "../../../../firebase";
 import { useRouter } from "next/navigation";
 import { useGlobalUser } from "@/context/authContext";
-import { useGlobalRouter } from "@/context/routeContext";
+import { useLoader } from "@/context/loaderContext";
 
 const Login = () => {
   const { userData, setUserData, loginSubmit, isLoading } = useGlobalUser();
-  const { home } = useGlobalRouter();
+  const { goToHome } = useLoader();
   const router = useRouter();
   const provider = new GoogleAuthProvider();
 
@@ -24,7 +24,7 @@ const Login = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUserData(user);
-        router.push("/Home");
+        goToHome()
         const uid = user.uid;
       } else {
         router.push("/Login");

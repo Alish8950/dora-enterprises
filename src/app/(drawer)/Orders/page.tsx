@@ -10,9 +10,15 @@ import TableRow from "@mui/material/TableRow";
 import { useGlobalOrders } from "@/context/ordersContext";
 import ProductImage from '../../../assets/images/product_image.jpg';
 import Image from "next/image";
+import { useLoader } from "@/context/loaderContext";
 
 export default function Orders() {
   const { orders } = useGlobalOrders();
+  const {setGlobalLoading} = useLoader()
+
+  useEffect(() => {
+    setGlobalLoading(false);
+  }, [])
 
   return (
     <>

@@ -8,10 +8,13 @@ import LearnMore from "@/components/LearnMore";
 import Testimonials from "@/components/Testimonials";
 import PopularProducts from "@/components/PopularProducts";
 import { useGlobalUser } from "@/context/authContext";
+import { useLoader } from "@/context/loaderContext";
 
 export default function Home() {
-  const {userData} = useGlobalUser()
-  console.log(userData)
+  const {setGlobalLoading} = useLoader()
+  useEffect(() => {
+    setGlobalLoading(false)
+  },[])
 
   return (
     <>
