@@ -156,7 +156,6 @@ const Header = () => {
                     maxHeight: ITEM_HEIGHT * 4.5,
                     width: "26ch",
                   },
-                  
                 }}
               >
                 <Box padding="0 10px">
