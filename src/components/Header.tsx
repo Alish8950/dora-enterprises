@@ -64,7 +64,7 @@ const Header = () => {
     <>
       <Box className="sticky top-0 bg-white z-10 border-b border-green-[100]">
         <Box className="flex justify-between items-center max-w-[77%] m-auto h-[75px]">
-          <Box className="cursor-pointer" onClick={() => goToHome()}>
+          <Box className="cursor-pointer" onClick={() => router.push("/Home")}>
             <Image src={EcomLogo} alt="logo" />
           </Box>
           <Box className="flex items-center gap-4">

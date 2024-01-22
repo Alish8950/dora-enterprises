@@ -156,9 +156,16 @@
   "cart": [
     {
       "id": "65aba9946c0fad4e91b281ac",
+      "productImage": "testImage",
       "productName": "Arctic Ice Tequila",
       "productPrice": 47,
-      "quantity": 1,
+      "quantity": 2
+    },
+    {
+      "id": "65aba98b6c0fad4e91b281aa",
+      "productName": "Royal Brandy",
+      "productPrice": 55,
+      "quantity": 2,
       "productImage": "testImage"
     }
   ],
