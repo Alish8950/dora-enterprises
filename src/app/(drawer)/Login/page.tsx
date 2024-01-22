@@ -27,7 +27,7 @@ const Login = () => {
         goToHome()
         const uid = user.uid;
       } else {
-        router.push("/Login");
+        // router.push("/Login");
       }
     });
   }, []);
