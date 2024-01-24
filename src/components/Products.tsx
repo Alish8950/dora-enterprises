@@ -22,7 +22,7 @@ const baseURL = "http://localhost:5000";
 
 const Products = () => {
   // const customers = useContext(MyContext);
-  const { products } = useGlobalProducts();
+  const { products, randomProducts } = useGlobalProducts();
   const [customers, setCustomers] = useState<MyData[]>([]);
   const [editcustomers, setEditCustomers] = useState<MyData[]>([]);
   const [editName, setEditName] = useState("");
@@ -122,7 +122,7 @@ const Products = () => {
         </Typography>
       </Box>
       <Box className="grid grid-cols-4 gap-8">
-        {products.map((cus) => {
+        {randomProducts.map((cus) => {
           return (
             <Box
               className="max-w-[255px] shadow-lg cursor-pointer"

@@ -67,9 +67,7 @@ const initialState: CartState = {
   updateItemQuantity: () => {},
 };
 
-interface CartContextType extends CartState {}
-
-const CartContext = createContext<CartContextType | undefined>(undefined);
+const CartContext = createContext<CartState | undefined>(undefined);
 const API_URL = "http://localhost:5000/cart";
 
 const CartProvider: FC<AppContextProps> = ({ children }) => {

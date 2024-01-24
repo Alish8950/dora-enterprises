@@ -17,7 +17,8 @@ import Loader from "@/components/Loader";
 import { OrderContextProvider } from "@/context/ordersContext";
 import { RouterProvider } from "@/context/routeContext";
 import Head from "next/head";
-import TabLogo from '../assets/images/google.svg'
+import TabLogo from "../assets/images/google.svg";
+import { FilterContextProvider } from "@/context/filterContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -33,28 +34,30 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-       <Head>
-          <link rel="icon" href={TabLogo} />
-        </Head>
+      <Head>
+        <link rel="icon" href={TabLogo} />
+      </Head>
       <body>
-        <RouterProvider>
-          <LoaderProvider>
-            <AuthAppProvider>
-              <AppProvider>
-                <CartProvider>
-                  <AddressProvider>
-                    <OrderContextProvider>
-                      <TestimonialsProvider>
-                        {children}
-                        <GlobalLoader />
-                      </TestimonialsProvider>
-                    </OrderContextProvider>
-                  </AddressProvider>
-                </CartProvider>
-              </AppProvider>
-            </AuthAppProvider>
-          </LoaderProvider>
-        </RouterProvider>
+        <FilterContextProvider>
+          <RouterProvider>
+            <LoaderProvider>
+              <AuthAppProvider>
+                <AppProvider>
+                  <CartProvider>
+                    <AddressProvider>
+                      <OrderContextProvider>
+                        <TestimonialsProvider>
+                          {children}
+                          <GlobalLoader />
+                        </TestimonialsProvider>
+                      </OrderContextProvider>
+                    </AddressProvider>
+                  </CartProvider>
+                </AppProvider>
+              </AuthAppProvider>
+            </LoaderProvider>
+          </RouterProvider>
+        </FilterContextProvider>
       </body>
     </html>
   );

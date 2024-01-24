@@ -30,8 +30,9 @@ export interface ProductState {
   isError: boolean;
   products: Product[];
   popularProducts: Product[];
+  randomProducts: Product[];
   singleProduct: Product | null;
-  getSingleProduct: (params: string) => void
+  getSingleProduct: (params: string) => void;
 }
 
 const initialState: ProductState = {
@@ -39,8 +40,9 @@ const initialState: ProductState = {
   isError: false,
   products: [],
   popularProducts: [],
+  randomProducts: [],
   singleProduct: null,
-  getSingleProduct: () => {}, 
+  getSingleProduct: () => {}
 };
 
 const AppContext = createContext<ProductState | undefined>(undefined);
@@ -51,23 +53,11 @@ interface AppContextProps {
 const AppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {setGlobalLoading} = useLoader()
-  // const getProducts = async (url: string) => {
-  //   dispatch({ type: "SET_LOADING" });
-  //   setGlobalLoading(true)
-  //   try {
-  //     const res = await fetch(url);
-  //     const data = await res.json();
-  //     dispatch({ type: "MY_API_DATA", payload: data });
-  //     setGlobalLoading(false)
-  //   } catch (error) {
-  //     dispatch({ type: "API_ERROR" });
-  //   }
-  // };
   const getProducts = async () => {
     dispatch({ type: "SET_LOADING" });
     setGlobalLoading(true)
     try {
-      const res = await fetch("http://localhost:3004/products/");
+      const res = await fetch("http://localhost:5000/products/");
       const data = await res.json();
       dispatch({ type: "MY_API_DATA", payload: data });
       setGlobalLoading(false)
@@ -78,7 +68,7 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
   const getSingleProduct = async (params: string) => {
     setGlobalLoading(true)
     try {
-      const res = await fetch(`http://localhost:3004/products/${params}`);
+      const res = await fetch(`http://localhost:5000/products/${params}`);
       const data = await res.json();
       dispatch({type: "SINGLE_PRODUCT_DATA", payload: data})
       setGlobalLoading(false)
@@ -86,22 +76,9 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
       console.log("Can't get data ", error);
     }
   };
-  const getProductsApi = async () => {
-    dispatch({ type: "SET_LOADING" });
-    setGlobalLoading(true)
-    try {
-      const res = await fetch("http://localhost:3004/products/");
-      const data = await res.json();
-      setGlobalLoading(false)
-    } catch (error) {
-      dispatch({ type: "API_ERROR" });
-    }
-  };
-  
 
   useEffect(() => {
     getProducts();
-    // getProductsApi();
   }, []);
   return (
     <AppContext.Provider value={{ ...state, getSingleProduct }}>

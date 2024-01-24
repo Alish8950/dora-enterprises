@@ -5,7 +5,7 @@ import SampleProduct from "../assets/images/sample_product.png";
 import { useGlobalProducts } from "@/context/productList";
 import { useRouter } from "next/navigation";
 
-const PopularProducts = () => {
+const RandomProducts = () => {
   const router = useRouter();
   const { popularProducts } = useGlobalProducts();
 
@@ -49,4 +49,4 @@ const PopularProducts = () => {
   );
 };
 
-export default PopularProducts;
+export default RandomProducts;
