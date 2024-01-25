@@ -10,27 +10,30 @@ import React, {
   useEffect,
   useState,
 } from "react";
-import { useLoader } from "./loaderContext";
-
-import { Cart, useGlobalCart } from "./cartContext";
-import { useRouter } from "next/navigation";
-
-
+import { Product, useGlobalProducts } from "./productList";
 
 export interface FilterState {
   isLoading: boolean;
   isError: boolean;
+  filterProducts: Product[];
+  allProducts: Product[];
   sortingValue: string;
+  searchValue: string;
   setSortingValue: (ele: any) => void;
+  setSearchValue: (ele: any) => void;
   sorting: () => void;
 }
 
 const initialState: FilterState = {
   isLoading: false,
   isError: false,
-  sortingValue: "lowest",
+  filterProducts: [],
+  allProducts: [],
+  sortingValue: "",
+  searchValue: "",
   setSortingValue: () => {},
-  sorting: () => {}
+  setSearchValue: () => {},
+  sorting: () => {},
 };
 
 const AppContext = createContext<FilterState | undefined>(undefined);
@@ -40,11 +43,26 @@ interface AppContextProps {
 }
 const FilterContextProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [sortingValue, setSortingValue] = useState('lowest')
+  const [sortingValue, setSortingValue] = useState<string>("lowest");
+  const [searchValue, setSearchValue] = useState<string>("")
+  const { products } = useGlobalProducts();
 
+  // to load all the products for grid and list view
+  useEffect(() => {
+    dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: products });
+  }, [products]);
+
+
+  useEffect(() => {
+    dispatch({ type: "SORTING_PRODUCTS", payload:sortingValue});
+  }, [sortingValue, products, searchValue]);
+
+  useEffect(() => {
+    dispatch({ type: "FILTER_PRODUCTS", payload: searchValue });
+  },[searchValue])
 
   return (
-    <AppContext.Provider value={{ ...state, sortingValue, setSortingValue }}>
+    <AppContext.Provider value={{ ...state, sortingValue, setSortingValue, searchValue, setSearchValue }}>
       {children}
     </AppContext.Provider>
   );

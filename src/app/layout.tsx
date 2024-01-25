@@ -38,11 +38,11 @@ export default function RootLayout({
         <link rel="icon" href={TabLogo} />
       </Head>
       <body>
-        <FilterContextProvider>
-          <RouterProvider>
-            <LoaderProvider>
-              <AuthAppProvider>
-                <AppProvider>
+        <AppProvider>
+          <FilterContextProvider>
+            <RouterProvider>
+              <LoaderProvider>
+                <AuthAppProvider>
                   <CartProvider>
                     <AddressProvider>
                       <OrderContextProvider>
@@ -53,11 +53,11 @@ export default function RootLayout({
                       </OrderContextProvider>
                     </AddressProvider>
                   </CartProvider>
-                </AppProvider>
-              </AuthAppProvider>
-            </LoaderProvider>
-          </RouterProvider>
-        </FilterContextProvider>
+                </AuthAppProvider>
+              </LoaderProvider>
+            </RouterProvider>
+          </FilterContextProvider>
+        </AppProvider>
       </body>
     </html>
   );
