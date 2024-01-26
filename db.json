@@ -11,7 +11,7 @@
         "alcoholConcentration": 42,
         "beverageDescription": "A unique Irish whiskey blend, matured in sherry casks",
         "beverageCategory": "Irish Whiskey",
-        "beverageBrand": "Emerald Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "b5g67ab23e7893f54c21d8f0",
@@ -24,7 +24,7 @@
         "alcoholConcentration": 40,
         "beverageDescription": "Smooth and pure vodka with a crisp finish",
         "beverageCategory": "Vodka",
-        "beverageBrand": "Mountain Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "f3h89de21g67y2w53v41z6h0",
@@ -37,7 +37,7 @@
         "alcoholConcentration": 45,
         "beverageDescription": "Aromatic gin with a blend of natural herbs",
         "beverageCategory": "Gin",
-        "beverageBrand": "Fields Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "m4k56cd34l7893x24b51a9n8",
@@ -50,7 +50,7 @@
         "alcoholConcentration": 38,
         "beverageDescription": "Rich and smooth, aged in oak barrels",
         "beverageCategory": "Rum",
-        "beverageBrand": "Ruby Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "z7h89fd21g93a2w53v41z3f2",
@@ -63,7 +63,7 @@
         "alcoholConcentration": 40,
         "beverageDescription": "Smooth tequila with a fiery finish",
         "beverageCategory": "Tequila",
-        "beverageBrand": "Stream Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "n6i57ed45m7894y34c62b8p3",
@@ -76,7 +76,7 @@
         "alcoholConcentration": 40,
         "beverageDescription": "Elegant and sophisticated, with a rich flavor",
         "beverageCategory": "Cognac",
-        "beverageBrand": "Crystal Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "o5j68fe56n8912z45d73c9q4",
@@ -89,7 +89,7 @@
         "alcoholConcentration": 43,
         "beverageDescription": "A classic Scotch whisky, with a smoky character",
         "beverageCategory": "Scotch Whisky",
-        "beverageBrand": "Peaks Distillery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "p6k79gf67o9023a56e84d0r5",
@@ -102,7 +102,7 @@
         "alcoholConcentration": 5,
         "beverageDescription": "Rich in flavor, with a balance of malt and hops",
         "beverageCategory": "Beer",
-        "beverageBrand": "Amber Brewery"
+        "beverageBrand": "Old Monk"
     },
     {
         "_id": "q7l80hg78p0134b67f95e1s6",
@@ -115,7 +115,7 @@
         "alcoholConcentration": 12,
         "beverageDescription": "A delightful rosé with a hint of summer berries",
         "beverageCategory": "Wine",
-        "beverageBrand": "Blossom Vineyards"
+        "beverageBrand": "Jack Daniels"
     },
     {
         "_id": "r8m91ih89q0245c78g06f2t7",
@@ -128,7 +128,7 @@
         "alcoholConcentration": 4.5,
         "beverageDescription": "Crisp and refreshing with natural apple flavors",
         "beverageCategory": "Cider",
-        "beverageBrand": "Orchard Brewery"
+        "beverageBrand": "Jack Daniels"
     },
     {
       "_id": "s9n02ij90r0356d89h07g3u8",
@@ -141,7 +141,7 @@
       "alcoholConcentration": 45,
       "beverageDescription": "Rich and full-bodied, aged to perfection",
       "beverageCategory": "Bourbon",
-      "beverageBrand": "Midnight Distillery"
+      "beverageBrand": "Jack Daniels"
   },
   {
       "_id": "t0o03jk01s046e79i18h4v9",
@@ -154,7 +154,7 @@
       "alcoholConcentration": 4.7,
       "beverageDescription": "Light and crisp, with a smooth finish",
       "beverageCategory": "Beer",
-      "beverageBrand": "Frosty Brewery"
+      "beverageBrand": "Jack Daniels"
   },
   {
       "_id": "u1p14kl12t057f80j29i5w0",
@@ -167,7 +167,7 @@
       "alcoholConcentration": 11,
       "beverageDescription": "Vibrant and bubbly, perfect for celebrations",
       "beverageCategory": "Sparkling Wine",
-      "beverageBrand": "Sunrise Vineyards"
+      "beverageBrand": "Jack Daniels"
   },
   {
       "_id": "v2q25lm23u068g91k30j6x1",
@@ -180,7 +180,7 @@
       "alcoholConcentration": 40,
       "beverageDescription": "Smooth and mellow, with a warming finish",
       "beverageCategory": "Brandy",
-      "beverageBrand": "Arctic Distillery"
+      "beverageBrand": "Blenders Pride"
   },
   {
       "_id": "w3r36mn34v079h02l41k7y2",
@@ -193,7 +193,7 @@
       "alcoholConcentration": 38,
       "beverageDescription": "Bold and smooth, with a spicy kick",
       "beverageCategory": "Tequila",
-      "beverageBrand": "Desert Distillery"
+      "beverageBrand": "Blenders Pride"
   },
   {
       "_id": "x4s47no45w08ai13m52l8z3",
@@ -206,7 +206,7 @@
       "alcoholConcentration": 16,
       "beverageDescription": "Delicate and refined, a traditional Japanese sake",
       "beverageCategory": "Sake",
-      "beverageBrand": "Heaven's Brewery"
+      "beverageBrand": "Blenders Pride"
   },
   {
       "_id": "y5t58op56x09bj24n63m9a4",
@@ -219,7 +219,7 @@
       "alcoholConcentration": 46,
       "beverageDescription": "Complex and layered, with a smoky undertone",
       "beverageCategory": "Scotch Whisky",
-      "beverageBrand": "Mystic Distillery"
+      "beverageBrand": "Blenders Pride"
   },
   {
       "_id": "z6u69pq67y10ck35o74n0b5",
@@ -232,7 +232,7 @@
       "alcoholConcentration": 40,
       "beverageDescription": "Crisp and clean, with a hint of sea salt",
       "beverageCategory": "Vodka",
-      "beverageBrand": "Ocean Distillery"
+      "beverageBrand": "Blenders Pride"
   },
   {
       "_id": "a7v70qr78z11dl46p85o1c6",
@@ -245,7 +245,7 @@
       "alcoholConcentration": 60,
       "beverageDescription": "Intense and herbal, a traditional absinthe",
       "beverageCategory": "Absinthe",
-      "beverageBrand": "Valley Distillery"
+      "beverageBrand": "Teachers"
   },
   {
       "_id": "b8w81rs89a12em57q96p2d7",
@@ -258,7 +258,7 @@
       "alcoholConcentration": 37,
       "beverageDescription": "Smooth and sweet, with a hint of spice",
       "beverageCategory": "Rum",
-      "beverageBrand": "Royal Distillery"
+      "beverageBrand": "Teachers"
   },
   {
     "_id": "c9x92yt90b13fn68r07q3e8",
@@ -271,7 +271,7 @@
     "alcoholConcentration": 40,
     "beverageDescription": "Crisp and aromatic with a botanical blend",
     "beverageCategory": "Gin",
-    "beverageBrand": "Crystal Distillery"
+    "beverageBrand": "Teachers"
 },
 {
     "_id": "d0a03zq01c14go79j18i5u9",
@@ -284,7 +284,7 @@
     "alcoholConcentration": 5.5,
     "beverageDescription": "Sweet and spicy, with a hint of cinnamon",
     "beverageCategory": "Cider",
-    "beverageBrand": "Blazing Orchards"
+    "beverageBrand": "Teachers"
 },
 {
     "_id": "e1p15fm12d15hp80k20j6x0",
@@ -297,7 +297,7 @@
     "alcoholConcentration": 20,
     "beverageDescription": "Fruity and vibrant, a perfect summer drink",
     "beverageCategory": "Cocktail",
-    "beverageBrand": "Tropical Spirits"
+    "beverageBrand": "Teachers"
 },
 {
     "_id": "f2q26gn23e16h91l31k7z1",
@@ -310,7 +310,7 @@
     "alcoholConcentration": 15,
     "beverageDescription": "Smooth and subtle, perfect for sake connoisseurs",
     "beverageCategory": "Sake",
-    "beverageBrand": "Moonlight Brewery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "g3r37no34f17i02m42l8z2",
@@ -323,7 +323,7 @@
     "alcoholConcentration": 38,
     "beverageDescription": "Rich and bold, aged in oak barrels",
     "beverageCategory": "Rum",
-    "beverageBrand": "Old Captain Distillery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "h4s48op45g18aj14n53m9b3",
@@ -336,7 +336,7 @@
     "alcoholConcentration": 43,
     "beverageDescription": "Smooth with a hint of mountain herbs",
     "beverageCategory": "Whiskey",
-    "beverageBrand": "Alpine Distillery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "i5t59pr56g19bk25o64n0c4",
@@ -349,7 +349,7 @@
     "alcoholConcentration": 17,
     "beverageDescription": "Creamy and rich, with a velvety texture",
     "beverageCategory": "Liqueur",
-    "beverageBrand": "Velvet Distillery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "j6u70qs67h20cl36p75o1d5",
@@ -362,7 +362,7 @@
     "alcoholConcentration": 40,
     "beverageDescription": "Exceptionally smooth and clean, distilled five times",
     "beverageCategory": "Vodka",
-    "beverageBrand": "Polar Distillery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "k7v81rt78i21dm58r96p2e6",
@@ -375,7 +375,7 @@
     "alcoholConcentration": 46,
     "beverageDescription": "Elegant and smooth, with a hint of peat",
     "beverageCategory": "Scotch Whisky",
-    "beverageBrand": "Golden Fields Distillery"
+    "beverageBrand": "Red Label"
 },
 {
     "_id": "l8w92su89j22en69s07q2f7",
@@ -388,7 +388,7 @@
     "alcoholConcentration": 60,
     "beverageDescription": "Vivid and intense, with a unique blue hue",
     "beverageCategory": "Absinthe",
-    "beverageBrand": "Lagoon Distillery"
+    "beverageBrand": "Red Label"
 }
 ]
 ,

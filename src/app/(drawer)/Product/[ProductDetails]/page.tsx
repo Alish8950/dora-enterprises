@@ -79,6 +79,7 @@ export default function Product({
 
   return (
     <>
+    <Box className="overflow-auto h-[calc(100vh-76px)]">
       <Box className="max-w-[1111px] m-auto flex gap-[30px] w-full pt-[47px] pb-[114px]">
         <Box>
           <Box className="w-[540px]">
@@ -204,6 +205,7 @@ export default function Product({
           </Box>
         </Box>
       </Box>
+    </Box>
     </>
   );
 }

@@ -34,7 +34,7 @@ const Login = () => {
 
   return (
     <>
-      <Box className="w-full h-[53.5vh] flex justify-center items-center">
+      <Box className="w-full h-[calc(100vh-76px)] flex justify-center items-center">
         <Button
           className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case my-4"
           onClick={() => loginSubmit()}

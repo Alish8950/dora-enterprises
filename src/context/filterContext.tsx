@@ -19,8 +19,12 @@ export interface FilterState {
   allProducts: Product[];
   sortingValue: string;
   searchValue: string;
+  categoryValue: string;
+  brandValue: string;
   setSortingValue: (ele: any) => void;
   setSearchValue: (ele: any) => void;
+  setCategoryValue: (ele: any) => void;
+  setBrandValue: (ele: any) => void;
   sorting: () => void;
 }
 
@@ -31,8 +35,12 @@ const initialState: FilterState = {
   allProducts: [],
   sortingValue: "",
   searchValue: "",
+  categoryValue: "",
+  brandValue: "",
   setSortingValue: () => {},
   setSearchValue: () => {},
+  setCategoryValue: () => {},
+  setBrandValue: () => {},
   sorting: () => {},
 };
 
@@ -44,7 +52,9 @@ interface AppContextProps {
 const FilterContextProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [sortingValue, setSortingValue] = useState<string>("lowest");
-  const [searchValue, setSearchValue] = useState<string>("")
+  const [searchValue, setSearchValue] = useState<string>("");
+  const [categoryValue, setCategoryValue] = useState<string>("All");
+  const [brandValue, setBrandValue] = useState<string>("");
   const { products } = useGlobalProducts();
 
   // to load all the products for grid and list view
@@ -52,17 +62,36 @@ const FilterContextProvider: FC<AppContextProps> = ({ children }) => {
     dispatch({ type: "LOAD_FILTER_PRODUCTS", payload: products });
   }, [products]);
 
-
   useEffect(() => {
-    dispatch({ type: "SORTING_PRODUCTS", payload:sortingValue});
+    dispatch({ type: "SORTING_PRODUCTS", payload: sortingValue });
   }, [sortingValue, products, searchValue]);
 
   useEffect(() => {
-    dispatch({ type: "FILTER_PRODUCTS", payload: searchValue });
-  },[searchValue])
+    dispatch({ type: "FILTER_PRODUCTS_SEARCH", payload: searchValue });
+  }, [searchValue]);
+
+  useEffect(() => {
+    dispatch({ type: "FILTER_PRODUCTS_CATEGORY", payload: categoryValue });
+  }, [categoryValue]);
+
+  useEffect(() => {
+    dispatch({ type: "FILTER_PRODUCTS_BRAND", payload: brandValue });
+  }, [brandValue]);
 
   return (
-    <AppContext.Provider value={{ ...state, sortingValue, setSortingValue, searchValue, setSearchValue }}>
+    <AppContext.Provider
+      value={{
+        ...state,
+        sortingValue,
+        setSortingValue,
+        searchValue,
+        setSearchValue,
+        setCategoryValue,
+        categoryValue,
+        brandValue,
+        setBrandValue
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

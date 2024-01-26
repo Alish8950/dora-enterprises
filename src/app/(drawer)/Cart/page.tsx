@@ -124,6 +124,7 @@ export default function Cart() {
 
   return (
     <>
+    <Box className="overflow-auto h-[calc(100vh-76px)]">
       <Box className="max-w-[1111px] m-auto w-full pt-[47px] pb-[114px]">
         <Box className="text-center">
           <Typography className="text-secondary text-[26px] font-medium">
@@ -232,6 +233,7 @@ export default function Cart() {
           </Box>
         </Box>
       </Box>
+    </Box>
     </>
   );
 }
