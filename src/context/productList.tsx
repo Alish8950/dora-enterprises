@@ -8,6 +8,7 @@ import React, {
   createContext,
   useReducer,
   useEffect,
+  useState,
 } from "react";
 import { useLoader } from "./loaderContext";
 
@@ -23,6 +24,8 @@ export interface Product {
   volume: number;
   alcoholConcentration: number;
   beverageDescription: string;
+  beverageCategory: string;
+  beverageBrand: string;
 }
 
 export interface ProductState {
@@ -32,7 +35,9 @@ export interface ProductState {
   popularProducts: Product[];
   randomProducts: Product[];
   singleProduct: Product | null;
+  enableOuterScroll: boolean;
   getSingleProduct: (params: string) => void;
+  setEnableOuterScroll: (e: any) => void;
 }
 
 const initialState: ProductState = {
@@ -42,7 +47,9 @@ const initialState: ProductState = {
   popularProducts: [],
   randomProducts: [],
   singleProduct: null,
-  getSingleProduct: () => {}
+  enableOuterScroll: false,
+  getSingleProduct: () => {},
+  setEnableOuterScroll: () => {}
 };
 
 const AppContext = createContext<ProductState | undefined>(undefined);
@@ -52,6 +59,7 @@ interface AppContextProps {
 }
 const AppProvider: FC<AppContextProps> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [enableOuterScroll, setEnableOuterScroll] = useState(false);
   const {setGlobalLoading} = useLoader()
   const getProducts = async () => {
     dispatch({ type: "SET_LOADING" });
@@ -81,7 +89,7 @@ const AppProvider: FC<AppContextProps> = ({ children }) => {
     getProducts();
   }, []);
   return (
-    <AppContext.Provider value={{ ...state, getSingleProduct }}>
+    <AppContext.Provider value={{ ...state, getSingleProduct, enableOuterScroll, setEnableOuterScroll }}>
       {children}
     </AppContext.Provider>
   );
