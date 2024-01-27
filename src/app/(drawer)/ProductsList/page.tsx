@@ -81,13 +81,13 @@ export default function ProductsList() {
   
   return (
     <>
-    <Box className="overflow-auto h-[calc(100vh-76px)]">
-      <Box className={`flex justify-center`}>
-        <Box className="flex gap-4">
+      <Box className="flex justify-center mt-5">
+        <Box className="flex gap-8">
           <Box>
             <TextField
               variant="outlined"
               size="small"
+              className="mb-5"
               placeholder="search..."
               onChange={(e) => setSearchValue(e.target.value)}
               InputProps={{
@@ -99,7 +99,7 @@ export default function ProductsList() {
               }}
             />
             <Box>
-              <Typography>Category</Typography>
+              <Typography className="text-xl font-medium mb-2">Category</Typography>
               {categoryOnlyData.map((currElem: any, index) => {
                 const isActive = currElem.toString() === categoryValue;
                 return (
@@ -116,6 +116,7 @@ export default function ProductsList() {
               })}
             </Box>
             <Box>
+            <Typography className="text-xl font-medium mb-2 mt-5">Brand</Typography>
               <FormControl className="max-w-[200px]" fullWidth>
                 <Select
                   labelId="demo-simple-select-label"
@@ -136,8 +137,8 @@ export default function ProductsList() {
               </FormControl>
             </Box>
           </Box>
-          <Box>
-            <Box className="flex items-center justify-between">
+          <Box className="w-full max-w-[980px]">
+            <Box className="flex items-center justify-between mb-5" >
               <Typography className="text-2xl text-blue-[800] font-medium">
                 Products
               </Typography>
@@ -158,7 +159,7 @@ export default function ProductsList() {
               </FormControl>
             </Box>
             <Box>
-              <Box ref={innerBoxRef}  onScroll={handleInnerScroll} className="m-auto w-fit over-auto h-[calc(100vh-128px)]">
+              <Box ref={innerBoxRef}  onScroll={handleInnerScroll} className="m-auto w-fit pb-3 overflow-auto h-[calc(100vh-148px)]">
                 <Box className="grid grid-cols-4 gap-8">
                   {filterProducts.map((currElem) => {
                     return (
@@ -195,7 +196,6 @@ export default function ProductsList() {
           </Box>
         </Box>
       </Box>
-    </Box>
     </>
   );
 }
