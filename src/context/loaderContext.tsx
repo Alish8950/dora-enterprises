@@ -9,6 +9,8 @@ interface LoaderContextProps {
     goToCart: () => void;
     goToHome: () => void;
     goToOrders: () => void;
+    goToProductsList: () => void;
+    goToSingleProduct: (id: string) => void;
 }
 
 const LoaderContext = createContext<LoaderContextProps>({
@@ -17,6 +19,8 @@ const LoaderContext = createContext<LoaderContextProps>({
     goToCart: () => {},
     goToHome: () => {},
     goToOrders: () => {},
+    goToProductsList: () => {},
+    goToSingleProduct: () => {},
 });
 
 interface AppContextProps {
@@ -37,12 +41,18 @@ export const LoaderProvider: FC<AppContextProps> = ({ children }) => {
         setGlobalLoading(true);
         router.push("/Home")
     }
-    const goToSingleProduct = () => {
-
+    const goToSingleProduct = (id: string) => {
+        setGlobalLoading(true);
+        router.push(`/Product/${id}`)
     }
     const goToOrders = () => {
         setGlobalLoading(true);
         router.push("/Orders")
+    }
+
+    const goToProductsList = () => {
+        setGlobalLoading(true);
+        router.push("/ProductsList")
     }
 
     const goToLogin = () => {
@@ -51,7 +61,7 @@ export const LoaderProvider: FC<AppContextProps> = ({ children }) => {
     }
 
     return (
-        <LoaderContext.Provider value={{ globalLoading, setGlobalLoading, goToCart, goToHome, goToOrders }}>
+        <LoaderContext.Provider value={{ globalLoading, setGlobalLoading, goToCart, goToHome, goToOrders, goToProductsList, goToSingleProduct }}>
             {children}
         </LoaderContext.Provider>
     );

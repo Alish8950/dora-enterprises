@@ -11,6 +11,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useGlobalProducts } from "@/context/productList";
+import { useLoader } from "@/context/loaderContext";
 
 interface MyData {
   id: string;
@@ -29,6 +30,7 @@ const Products = () => {
   const [editNumber, setEditNumber] = useState("");
   const [userId, setId] = useState("");
   const router = useRouter();
+  const {goToSingleProduct} = useLoader()
 
   const getData = async (url: string) => {
     try {
@@ -130,7 +132,7 @@ const Products = () => {
             >
               <Box
                 className=" bg-white-[200] flex items-center justify-center"
-                onClick={() => router.push(`/Product/${cus._id}`)}
+                onClick={() => goToSingleProduct(cus._id)}
               >
                 <Image
                   className="w-[200px]"
