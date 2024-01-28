@@ -17,9 +17,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import SampleProduct from "../../../assets/images/sample_product.png";
 import SearchIcon from "@mui/icons-material/Search";
+import { useLoader } from "@/context/loaderContext";
 
 export default function ProductsList() {
   const innerBoxRef = useRef(null);
+  const { setGlobalLoading, goToSingleProduct } = useLoader();
   const {
     sorting,
     sortingValue,
@@ -30,12 +32,16 @@ export default function ProductsList() {
     allProducts,
     setCategoryValue,
     categoryValue,
-    setBrandValue
+    setBrandValue,
   } = useGlobalFilter();
   const [age, setAge] = useState("lowest");
   const [brand, setBrand] = useState("All");
   const router = useRouter();
-  const {enableOuterScroll, setEnableOuterScroll} = useGlobalProducts();
+  const { enableOuterScroll, setEnableOuterScroll } = useGlobalProducts();
+
+  useEffect(() => {
+    setGlobalLoading(false);
+  }, []);
 
   const handleChange = (event: SelectChangeEvent) => {
     console.log(event.target.value as string);
@@ -65,11 +71,11 @@ export default function ProductsList() {
   const categoryOnlyData = getUniqueCategory(allProducts);
   const brandOnlyData = getUniqueBrand(allProducts);
 
-
   const handleInnerScroll = (e: any) => {
     const element = e.target;
-    const atBottom = element.scrollHeight - element.scrollTop === element.clientHeight;
-    console.log(atBottom)
+    const atBottom =
+      element.scrollHeight - element.scrollTop === element.clientHeight;
+    console.log(atBottom);
     if (atBottom) {
       // Enable the outer scroll when the inner scroll reaches the end
       setEnableOuterScroll(true);
@@ -78,7 +84,7 @@ export default function ProductsList() {
       setEnableOuterScroll(false);
     }
   };
-  
+
   return (
     <>
       <Box className="flex justify-center mt-5">
@@ -99,7 +105,9 @@ export default function ProductsList() {
               }}
             />
             <Box>
-              <Typography className="text-xl font-medium mb-2">Category</Typography>
+              <Typography className="text-xl font-medium mb-2">
+                Category
+              </Typography>
               {categoryOnlyData.map((currElem: any, index) => {
                 const isActive = currElem.toString() === categoryValue;
                 return (
@@ -116,7 +124,9 @@ export default function ProductsList() {
               })}
             </Box>
             <Box>
-            <Typography className="text-xl font-medium mb-2 mt-5">Brand</Typography>
+              <Typography className="text-xl font-medium mb-2 mt-5">
+                Brand
+              </Typography>
               <FormControl className="max-w-[200px]" fullWidth>
                 <Select
                   labelId="demo-simple-select-label"
@@ -125,20 +135,20 @@ export default function ProductsList() {
                   value={brand}
                   onChange={handleChange1}
                   displayEmpty
-                > 
-                {
-                  brandOnlyData.map((currElem: any, index) => {
+                >
+                  {brandOnlyData.map((currElem: any, index) => {
                     return (
-                      <MenuItem value={currElem.toString()} key={index}>{currElem.toString()}</MenuItem>
-                    )
-                  })
-                }
+                      <MenuItem value={currElem.toString()} key={index}>
+                        {currElem.toString()}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
               </FormControl>
             </Box>
           </Box>
           <Box className="w-full max-w-[980px]">
-            <Box className="flex items-center justify-between mb-5" >
+            <Box className="flex items-center justify-between mb-5">
               <Typography className="text-2xl text-blue-[800] font-medium">
                 Products
               </Typography>
@@ -159,7 +169,11 @@ export default function ProductsList() {
               </FormControl>
             </Box>
             <Box>
-              <Box ref={innerBoxRef}  onScroll={handleInnerScroll} className="m-auto w-fit pb-3 overflow-auto h-[calc(100vh-148px)]">
+              <Box
+                ref={innerBoxRef}
+                onScroll={handleInnerScroll}
+                className="m-auto w-fit pb-3 overflow-auto h-[calc(100vh-148px)]"
+              >
                 <Box className="grid grid-cols-4 gap-8">
                   {filterProducts.map((currElem) => {
                     return (
@@ -169,9 +183,7 @@ export default function ProductsList() {
                       >
                         <Box
                           className=" bg-white-[200] flex items-center justify-center cursor-pointer"
-                          onClick={() =>
-                            router.push(`/Product/${currElem._id}`)
-                          }
+                          onClick={() => goToSingleProduct(currElem._id)}
                         >
                           <Image
                             className="w-[200px]"

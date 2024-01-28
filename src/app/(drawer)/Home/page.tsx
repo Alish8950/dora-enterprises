@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
-  const { setGlobalLoading } = useLoader();
+  const { setGlobalLoading, goToProductsList } = useLoader();
   useEffect(() => {
     setGlobalLoading(false);
   }, []);
@@ -42,7 +42,7 @@ export default function Home() {
               </Typography>
               <Button
                 className="bg-primary text-white text-xl font-medium h-10 hover:bg-primary px-11 normal-case"
-                onClick={() => router.push("/ProductsList")}
+                onClick={() => goToProductsList()}
               >
                 Discover our collection
               </Button>

@@ -4,10 +4,12 @@ import Image from "next/image";
 import SampleProduct from "../assets/images/sample_product.png";
 import { useGlobalProducts } from "@/context/productList";
 import { useRouter } from "next/navigation";
+import { useLoader } from "@/context/loaderContext";
 
 const PopularProducts = () => {
   const router = useRouter();
   const { popularProducts } = useGlobalProducts();
+  const {goToSingleProduct} = useLoader()
 
   return (
     <>
@@ -24,7 +26,7 @@ const PopularProducts = () => {
               return (
                 <Box key={currElem._id} className="max-w-[255px] shadow-lg">
                   <Box className=" bg-white-[200] flex items-center justify-center cursor-pointer"
-                  onClick={() => router.push(`/Product/${currElem._id}`)}>
+                  onClick={() => goToSingleProduct(currElem._id)}>
                     <Image
                       className="w-[200px]"
                       src={SampleProduct}
